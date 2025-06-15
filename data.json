@@ -1,0 +1,122 @@
+{
+  "karwa_chauth": {
+    "title": {
+      "English": "Karwa Chauth Pooja",
+      "Hindi": "करवा चौथ पूजा"
+    },
+    "details": {
+      "English": [
+        "1. Eat and drink before sunrise (preferably by 5:15am).",
+        "2. Midday pooja from 11am to 4pm. Listen to the story with some rice in hand, set aside a few coins and sugar pieces to bring back to Bareilly. After the story, offer water to the sun with some rice (save the rest for the moon at night).",
+        "3. In the evening, prepare 'pue' and offer it to the moon along with remaining rice.",
+        "4. Eat and drink only after seeing the moon and completing the evening pooja."
+      ],
+      "Hindi": [
+        "1. सुबह सूरज की पहली किरण से पहले खा पी लो (लगभग 5:15am तक)।",
+        "2. दोपहर की पूजा 11am से 4pm के बीच कर लो। कहानी चावल हाथ में लेकर सुनते हैं। थोड़े पैसे और मिश्री अलग निकाल लो जिन्हें बाद में बरेली ले जाना होता है। कहानी के बाद सूरज को जल और चावल चढ़ाते हैं (कुछ चावल बचा कर रात को चांद को चढ़ाना है)।",
+        "3. शाम को पुए बनाकर चांद को भोग लगाना है और दोपहर के बचे चावल चढ़ाने हैं।",
+        "4. चांद देखने और पूजा के बाद ही खाना और पानी लेना है।"
+      ]
+    }
+  },
+  "gowardhan": {
+    "title": {
+      "English": "Gowardhan Pooja",
+      "Hindi": "गोवर्धन पूजा"
+    },
+    "details": {
+      "English": [
+        "Prepare potato and brinjal curry.",
+        "Make parathas in a deep pan (kadhai)."
+      ],
+      "Hindi": [
+        "आलू बैंगन की सब्ज़ी बनाएं।",
+        "पराठे कढ़ाई में सेंकें।"
+      ]
+    }
+  },
+  "mathri_recipe": {
+    "title": {
+      "English": "Mummy's Mathri Recipe",
+      "Hindi": "मम्मी की मठरी रेसिपी"
+    },
+    "ingredients": {
+      "English": [
+        "½ glass semolina (sooji)",
+        "2 glasses refined flour (maida)",
+        "½ glass wheat flour (aata)",
+        "Carom seeds (ajwain)",
+        "Salt",
+        "Lukewarm water"
+      ],
+      "Hindi": [
+        "सूजी - आधा गिलास",
+        "मैदा - दो गिलास",
+        "आटा - आधा गिलास",
+        "अजवाइन",
+        "नमक",
+        "गुनगुना पानी"
+      ]
+    },
+    "method": {
+      "English": [
+        "Mix all ingredients and knead with lukewarm water.",
+        "Let the dough rest for 25 minutes.",
+        "Break into balls, roll them out, poke with fork.",
+        "Fry slowly on low flame in a deep pan."
+      ],
+      "Hindi": [
+        "सभी सामग्री को गुनगुने पानी से गूंद लें।",
+        "आटे को 25 मिनट तक रख दें।",
+        "लोई तोड़कर बेल लें और फोर्क से छेद करें।",
+        "कढ़ाई में धीमी आंच पर तलें।"
+      ]
+    }
+  },
+  "urad_dal_poori": {
+    "title": {
+      "English": "Urad Dal Poori Recipe",
+      "Hindi": "उड़द दाल की पूड़ी"
+    },
+    "ingredients": {
+      "English": [
+        "1 cup urad dal",
+        "Salt to taste",
+        "½ tsp asafoetida (hing)",
+        "1 tsp fennel seeds",
+        "½ tsp garam masala",
+        "1 tbsp semolina (sooji)",
+        "Wheat flour as needed",
+        "A little oil"
+      ],
+      "Hindi": [
+        "1 कप उड़द की दाल",
+        "नमक – स्वाद अनुसार",
+        "हींग – ½ चम्मच",
+        "सौंफ – 1 चम्मच",
+        "गरम मसाला – ½ चम्मच",
+        "सूजी (रवा) – 1 चम्मच",
+        "गेहूं का आटा – आवश्यकतानुसार",
+        "थोड़ा सा तेल"
+      ]
+    },
+    "method": {
+      "English": [
+        "Soak urad dal for 3–4 hours.",
+        "Drain and grind to a fine paste without adding water.",
+        "Mix the paste with flour, spices, and knead into a dough.",
+        "Let it rest. Make small balls, roll and deep fry like pooris."
+      ],
+      "Hindi": [
+        "उड़द की दाल को 3-4 घंटे के लिए पानी में भिगो दें।",
+        "दाल को निकालें और बिना पानी डाले बारीक पीस लें।",
+        "पिसी हुई दाल को आटे में मसालों के साथ मिलाएं और गूंद लें।",
+        "थोड़ा विश्राम दें। फिर लोइयां बनाकर पूड़ी की तरह बेलें और तलें।"
+      ]
+    },
+    "tip": {
+      "English": "Crispy outside, soft inside. Serve with curd, pickle, or aloo sabzi.",
+      "Hindi": "यह पूड़ी बाहर से करारी और अंदर से नरम होती है। इसे दही, अचार या आलू की सब्जी के साथ परोसे।"
+    }
+  }
+}
