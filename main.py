@@ -36,6 +36,12 @@ KEYWORDS_MAP = {
     "mummy mathri": "mathri_recipe",
     "urad dal poori": "urad_dal_poori",
     "उड़द दाल पूड़ी": "urad_dal_poori",
+    "bittergourd": "bittergourd_recipe",
+    "karela": "bittergourd_recipe",
+    "करेला": "bittergourd_recipe",
+    "pumpkin": "pumpkin_recipe",
+    "kaddu": "pumpkin_recipe",
+    "कद्दू": "pumpkin_recipe",
 }
 
 @app.post("/api/chatbot/message")
