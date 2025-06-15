@@ -4,6 +4,7 @@ from pydantic import BaseModel
 from typing import Optional
 import json
 import os
+import re
 
 app = FastAPI()
 
@@ -18,14 +19,14 @@ app.add_middleware(
 
 class ChatRequest(BaseModel):
     message: str
-    language: Optional[str] = "English"  # Note: matches keys in JSON exactly
+    language: Optional[str] = "English"  # "English" or "Hindi"
 
 # Load data.json
 DATA_FILE = os.path.join(os.path.dirname(__file__), "data.json")
 with open(DATA_FILE, "r", encoding="utf-8") as f:
     DATA = json.load(f)
 
-# Map keywords to keys in data.json
+# Map keywords to keys in data.json (include Hindi & English keywords)
 KEYWORDS_MAP = {
     "karwa chauth": "karwa_chauth",
     "karwachauth": "karwa_chauth",
@@ -44,22 +45,61 @@ KEYWORDS_MAP = {
     "कद्दू": "pumpkin_recipe",
 }
 
+# Basic conversational intents mapping (both Hindi & English)
+CONVERSATION_RESPONSES = {
+    "hello": {
+        "English": "Hello! How can I help you today?",
+        "Hindi": "नमस्ते! मैं आपकी कैसे मदद कर सकती हूँ?"
+    },
+    "hi": {
+        "English": "Hi there! What would you like to know?",
+        "Hindi": "हेलो! आप क्या जानना चाहेंगे?"
+    },
+    "how are you": {
+        "English": "I'm good, thank you! How about you?",
+        "Hindi": "मैं ठीक हूँ, धन्यवाद! आप कैसे हैं?"
+    },
+    "thank you": {
+        "English": "You're welcome! Feel free to ask anything else.",
+        "Hindi": "आपका स्वागत है! कुछ और पूछना हो तो बताइए।"
+    },
+    "bye": {
+        "English": "Goodbye! Have a great day!",
+        "Hindi": "अलविदा! आपका दिन शुभ हो!"
+    }
+}
+
+def find_conversation_response(message: str, lang: str) -> Optional[str]:
+    for key, responses in CONVERSATION_RESPONSES.items():
+        if key in message:
+            return responses.get(lang, responses.get("English"))
+    return None
+
 @app.post("/api/chatbot/message")
 async def chatbot_message(request: ChatRequest):
     message = request.message.lower()
     lang = request.language.capitalize()  # Capitalize to match "English" or "Hindi"
 
-    # Find matched key from keywords
+    # Check for conversational queries first
+    conv_response = find_conversation_response(message, lang)
+    if conv_response:
+        return {"response": conv_response}
+
+    # Else try matching with keywords
     matched_key = None
     for kw, key in KEYWORDS_MAP.items():
-        if kw in message:
+        # Use regex word boundaries for better matching
+        if re.search(r'\b' + re.escape(kw.lower()) + r'\b', message):
             matched_key = key
             break
 
     if not matched_key:
-        return {
-            "response": "Sorry, I don't have information on that. Please ask about Karwa Chauth, Gowardhan, Mathri recipe, or Urad Dal Poori."
+        # If nothing matched, fallback response
+        fallback = {
+            "English": "Sorry, I don't have information on that. You can ask me about recipes or festivals.",
+            "Hindi": "माफ़ करें, मेरे पास इस विषय में जानकारी नहीं है। आप मुझसे व्यंजन या त्योहारों के बारे में पूछ सकते हैं।"
         }
+        return {"response": fallback.get(lang, fallback["English"])}
 
     content = DATA.get(matched_key)
     if not content or lang not in content.get("title", {}):
