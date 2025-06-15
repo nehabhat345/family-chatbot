@@ -28,22 +28,51 @@ with open(DATA_FILE, "r", encoding="utf-8") as f:
 
 # Keywords with regex patterns
 KEYWORDS_PATTERNS = [
-    (re.compile(r"\bkarwa\s?chauth\b"), "karwa_chauth"),
-    (re.compile(r"\bkarwachauth\b"), "karwa_chauth"),
+    # Karwa Chauth
+    (re.compile(r"\bkarwa[\s_-]?chauth\b", re.I), "karwa_chauth"),
+    (re.compile(r"\bkarvachauth\b", re.I), "karwa_chauth"),
+    (re.compile(r"\bkarva[\s_-]?chauth\b", re.I), "karwa_chauth"),
+    (re.compile(r"\bकरवा[\s]?चौथ\b"), "karwa_chauth"),
+    (re.compile(r"\bकरवाचौथ\b"), "karwa_chauth"),
+
+    # Gowardhan
+    (re.compile(r"\bgowardhan\b", re.I), "gowardhan"),
+    (re.compile(r"\bgovardhan\b", re.I), "gowardhan"),
     (re.compile(r"\bगोवर्धन\b"), "gowardhan"),
-    (re.compile(r"\bgowardhan\b"), "gowardhan"),
-    (re.compile(r"\bmathri\b"), "mathri_recipe"),
+    (re.compile(r"\bगोवर्धन[\s]?पूजा\b"), "gowardhan"),
+
+    # Mathri
+    (re.compile(r"\bmathri\b", re.I), "mathri_recipe"),
+    (re.compile(r"\bmethri\b", re.I), "mathri_recipe"),
     (re.compile(r"\bमठरी\b"), "mathri_recipe"),
-    (re.compile(r"\bmummy\s+mathri\b"), "mathri_recipe"),
-    (re.compile(r"\burad\s+dal\s+poori\b"), "urad_dal_poori"),
-    (re.compile(r"\bउड़द\s+दाल\s+पूड़ी\b"), "urad_dal_poori"),
-    (re.compile(r"\bbittergourd\b"), "bittergourd_recipe"),
-    (re.compile(r"\bkarela\b"), "bittergourd_recipe"),
-    (re.compile(r"\bकरेला\b"), "bittergourd_recipe"),
-    (re.compile(r"\bpumpkin\b"), "pumpkin_recipe"),
-    (re.compile(r"\bkaddu\b"), "pumpkin_recipe"),
+    (re.compile(r"\bमठरी[\s]?रेसिपी\b"), "mathri_recipe"),
+    (re.compile(r"\bmummy[\s]?(ki)?[\s]?mathri\b", re.I), "mathri_recipe"),
+
+    # Urad Dal Poori
+    (re.compile(r"\burad\b", re.I), "urad_dal_poori"),
+    (re.compile(r"\burud\b", re.I), "urad_dal_poori"),
+    (re.compile(r"\bdal\b", re.I), "urad_dal_poori"),
+    (re.compile(r"\bpoori\b", re.I), "urad_dal_poori"),
+    (re.compile(r"\bpuri\b", re.I), "urad_dal_poori"),
+    (re.compile(r"\burad[\s]dal[\s]puri\b", re.I), "urad_dal_poori"),
+    (re.compile(r"\burad[\s]ki[\s]poori\b", re.I), "urad_dal_poori"),
+    (re.compile(r"\bउड़द\b"), "urad_dal_poori"),
+    (re.compile(r"\bउड़द[\s]?दाल\b"), "urad_dal_poori"),
+    (re.compile(r"\bउड़द[\s]?दाल[\s]?पूड़ी\b"), "urad_dal_poori"),
+
+    # Bittergourd
+    (re.compile(r"\bbitter\s?gourd\b", re.I), "bittergourd_recipe"),
+    (re.compile(r"\bkarela\b", re.I), "bittergourd_recipe"),
+    (re.compile(r"\bकर[ेै]ला\b"), "bittergourd_recipe"),
+    (re.compile(r"\bकरेले[\s]?की[\s]?सब्जी\b"), "bittergourd_recipe"),
+
+    # Pumpkin
+    (re.compile(r"\bpumpkin\b", re.I), "pumpkin_recipe"),
+    (re.compile(r"\bkaddu\b", re.I), "pumpkin_recipe"),
     (re.compile(r"\bकद्दू\b"), "pumpkin_recipe"),
+    (re.compile(r"\bकद्दू[\s]?की[\s]?सब्जी\b"), "pumpkin_recipe"),
 ]
+
 
 # Conversational patterns
 CONVERSATION_RESPONSES = {
