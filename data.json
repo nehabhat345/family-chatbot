@@ -118,5 +118,57 @@
       "English": "Crispy outside, soft inside. Serve with curd, pickle, or aloo sabzi.",
       "Hindi": "यह पूड़ी बाहर से करारी और अंदर से नरम होती है। इसे दही, अचार या आलू की सब्जी के साथ परोसे।"
     }
+  },
+  "bittergourd_recipe": {
+    "title": {
+      "English": "Bittergourd (Karela) Recipe",
+      "Hindi": "करेले की रेसिपी"
+    },
+    "method": {
+      "English": [
+        "1. Peel the karela (bittergourd).",
+        "2. Rub salt on it with a sieve; if seeds are big, remove them.",
+        "3. Keep it salted for 2-3 hours.",
+        "4. Wash thoroughly with water and squeeze out the water, then whistle 2-3 times in the cooker.",
+        "5. Remove from cooker and keep karela in a strainer to drain as much water as possible.",
+        "6. Heat oil and add a pinch of asafoetida (hing), then add karela.",
+        "7. Roast karela pressing it well to remove bitterness, cook on low flame.",
+        "8. Add spices at the end when karela is 75% cooked, otherwise spices may burn.",
+        "9. Spices: fennel seeds (sauf), turmeric (haldi), salt, red chili powder, coriander (dhaniya), dried mango powder (amchoor).",
+        "10. Mix well and cook."
+      ],
+      "Hindi": [
+        "1. करेले का Chilka उतारो।",
+        "2. चिरा लगाकर नमक लगा दो, अगर बीज बड़े हों तो निकाल दो।",
+        "3. 2-3 घंटे तक नमक लगा के रखो।",
+        "4. अच्छे से पानी से धोकर करेले को निचोड़ लो और फिर 2-3 सीटी लगा दो।",
+        "5. कुकर से निकालकर करेले को स्टेनर में रख लो और जितना पानी हो सके निकाल दो।",
+        "6. तेल में हींग का छौंक लगाओ और करेले को डाल दो।",
+        "7. करेले को अच्छी तरह दबा दबा कर भूनो ताकि उसका सारा कड़वाहट निकल जाए। धीमी आंच पर पकाओ।",
+        "8. मसाले आखिरी में डालो जब करेले 75% तक भुन जाएं, वरना मसाले जल जाएंगे।",
+        "9. मसाले: सौंफ, हल्दी, नमक, लाल मिर्च, धनिया, अमचूर।",
+        "10. अच्छे से चलाओ और पकाओ।"
+      ]
+    }
+  },
+  "pumpkin_recipe": {
+    "title": {
+      "English": "Pumpkin (Kaddu) Recipe",
+      "Hindi": "कद्दू की रेसिपी"
+    },
+    "method": {
+      "English": [
+        "1. Peel the pumpkin; if hard, cook with 2 whistles.",
+        "2. Temper pumpkin with fenugreek seeds (methi dane) and asafoetida (hing).",
+        "3. Add coriander (dhaniya), dried mango powder (amchoor), salt, red chili powder, turmeric, and a little sugar.",
+        "4. Roast well until all water evaporates."
+      ],
+      "Hindi": [
+        "1. कद्दू का छिलका उतारो, अगर कठोर हो तो 2 सीटी लगा दो।",
+        "2. कद्दू में मेथी दाने और हींग की छौंक लगाओ।",
+        "3. कद्दू में धनिया, अमचूर, नमक, लाल मिर्च, हल्दी और थोड़ी चीनी डालो।",
+        "4. अच्छी तरह भूनो ताकि उसका सारा पानी सूख जाए।"
+      ]
+    }
   }
 }
