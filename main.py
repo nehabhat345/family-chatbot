@@ -26,26 +26,26 @@ DATA_FILE = os.path.join(os.path.dirname(__file__), "data.json")
 with open(DATA_FILE, "r", encoding="utf-8") as f:
     DATA = json.load(f)
 
-# Keywords for recipes or festivals
-KEYWORDS_MAP = {
-    "karwa chauth": "karwa_chauth",
-    "karwachauth": "karwa_chauth",
-    "गोवर्धन": "gowardhan",
-    "gowardhan": "gowardhan",
-    "mathri": "mathri_recipe",
-    "मठरी": "mathri_recipe",
-    "mummy mathri": "mathri_recipe",
-    "urad dal poori": "urad_dal_poori",
-    "उड़द दाल पूड़ी": "urad_dal_poori",
-    "bittergourd": "bittergourd_recipe",
-    "karela": "bittergourd_recipe",
-    "करेला": "bittergourd_recipe",
-    "pumpkin": "pumpkin_recipe",
-    "kaddu": "pumpkin_recipe",
-    "कद्दू": "pumpkin_recipe",
-}
+# Keywords with regex patterns
+KEYWORDS_PATTERNS = [
+    (re.compile(r"\bkarwa\s?chauth\b"), "karwa_chauth"),
+    (re.compile(r"\bkarwachauth\b"), "karwa_chauth"),
+    (re.compile(r"\bगोवर्धन\b"), "gowardhan"),
+    (re.compile(r"\bgowardhan\b"), "gowardhan"),
+    (re.compile(r"\bmathri\b"), "mathri_recipe"),
+    (re.compile(r"\bमठरी\b"), "mathri_recipe"),
+    (re.compile(r"\bmummy\s+mathri\b"), "mathri_recipe"),
+    (re.compile(r"\burad\s+dal\s+poori\b"), "urad_dal_poori"),
+    (re.compile(r"\bउड़द\s+दाल\s+पूड़ी\b"), "urad_dal_poori"),
+    (re.compile(r"\bbittergourd\b"), "bittergourd_recipe"),
+    (re.compile(r"\bkarela\b"), "bittergourd_recipe"),
+    (re.compile(r"\bकरेला\b"), "bittergourd_recipe"),
+    (re.compile(r"\bpumpkin\b"), "pumpkin_recipe"),
+    (re.compile(r"\bkaddu\b"), "pumpkin_recipe"),
+    (re.compile(r"\bकद्दू\b"), "pumpkin_recipe"),
+]
 
-# Simple conversational responses
+# Conversational patterns
 CONVERSATION_RESPONSES = {
     "hello": {
         "English": "Hello! How can I help you today?",
@@ -69,7 +69,7 @@ CONVERSATION_RESPONSES = {
     }
 }
 
-# Relation-based custom replies
+# Family relation responses
 RELATION_RESPONSES = {
     "mummy": {
         "English": "Mummy always makes the best food, doesn't she?",
@@ -110,14 +110,14 @@ RELATION_RESPONSES = {
 }
 
 def find_conversation_response(message: str, lang: str) -> Optional[str]:
-    for key, responses in CONVERSATION_RESPONSES.items():
-        if key in message:
+    for pattern, responses in CONVERSATION_RESPONSES.items():
+        if re.search(r'\b' + re.escape(pattern) + r'\b', message):
             return responses.get(lang, responses.get("English"))
     return None
 
 def find_relation_response(message: str, lang: str) -> Optional[str]:
     for relation, responses in RELATION_RESPONSES.items():
-        if re.search(r'\b' + re.escape(relation.lower()) + r'\b', message):
+        if re.search(r'\b' + re.escape(relation) + r'\b', message):
             return responses.get(lang, responses.get("English"))
     return None
 
@@ -136,16 +136,16 @@ async def chatbot_message(request: ChatRequest):
     if conv_response:
         return {"response": conv_response}
 
-    # 3. Match against recipe/festival keywords
+    # 3. Match against recipe/festival keywords using regex
     matched_key = None
-    for kw, key in KEYWORDS_MAP.items():
-        if re.search(r'\b' + re.escape(kw.lower()) + r'\b', message):
+    for pattern, key in KEYWORDS_PATTERNS:
+        if pattern.search(message):
             matched_key = key
             break
 
     if not matched_key:
         fallback = {
-            "English": "Sorry, I don't have information on that. You can ask me about recipes or festivals.",
+            "English": "Sorry, I don't have information on that. You can ask me about other recipes or festivals.",
             "Hindi": "माफ़ करें, मेरे पास इस विषय में जानकारी नहीं है। आप मुझसे व्यंजन या त्योहारों के बारे में पूछ सकते हैं।"
         }
         return {"response": fallback.get(lang, fallback["English"])}
