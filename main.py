@@ -26,7 +26,7 @@ DATA_FILE = os.path.join(os.path.dirname(__file__), "data.json")
 with open(DATA_FILE, "r", encoding="utf-8") as f:
     DATA = json.load(f)
 
-# Map keywords to keys in data.json (include Hindi & English keywords)
+# Keywords for recipes or festivals
 KEYWORDS_MAP = {
     "karwa chauth": "karwa_chauth",
     "karwachauth": "karwa_chauth",
@@ -45,7 +45,7 @@ KEYWORDS_MAP = {
     "कद्दू": "pumpkin_recipe",
 }
 
-# Basic conversational intents mapping (both Hindi & English)
+# Simple conversational responses
 CONVERSATION_RESPONSES = {
     "hello": {
         "English": "Hello! How can I help you today?",
@@ -69,32 +69,81 @@ CONVERSATION_RESPONSES = {
     }
 }
 
+# Relation-based custom replies
+RELATION_RESPONSES = {
+    "mummy": {
+        "English": "Mummy always makes the best food, doesn't she?",
+        "Hindi": "मम्मी का खाना हमेशा सबसे अच्छा होता है, है ना?"
+    },
+    "mom": {
+        "English": "Mom’s love is the secret ingredient in every recipe.",
+        "Hindi": "माँ का प्यार हर रेसिपी में छुपा हुआ स्वाद होता है।"
+    },
+    "chachi": {
+        "English": "Chachi must have some amazing recipes too!",
+        "Hindi": "चाची के पास भी जरूर कुछ लाजवाब रेसिपी होंगी!"
+    },
+    "didi": {
+        "English": "Didi always knows the kitchen hacks!",
+        "Hindi": "दीदी को तो सभी किचन टिप्स पता होती हैं!"
+    },
+    "papa": {
+        "English": "Papa always appreciates good food!",
+        "Hindi": "पापा को अच्छा खाना बहुत पसंद होता है!"
+    },
+    "bhabhi": {
+        "English": "Bhabhi cooks with so much love!",
+        "Hindi": "भाभी बहुत प्यार से खाना बनाती हैं!"
+    },
+    "nani": {
+        "English": "Nani’s recipes are pure gold.",
+        "Hindi": "नानी की रेसिपी खज़ाने की तरह होती हैं।"
+    },
+    "dadi": {
+        "English": "Dadi ke haath ka swaad alag hi hota hai!",
+        "Hindi": "दादी के हाथ का स्वाद ही कुछ और होता है!"
+    },
+    "bua": {
+        "English": "Bua's food has that special traditional touch!",
+        "Hindi": "बुआ के खाने में एक खास पारंपरिक स्वाद होता है!"
+    }
+}
+
 def find_conversation_response(message: str, lang: str) -> Optional[str]:
     for key, responses in CONVERSATION_RESPONSES.items():
         if key in message:
             return responses.get(lang, responses.get("English"))
     return None
 
+def find_relation_response(message: str, lang: str) -> Optional[str]:
+    for relation, responses in RELATION_RESPONSES.items():
+        if re.search(r'\b' + re.escape(relation.lower()) + r'\b', message):
+            return responses.get(lang, responses.get("English"))
+    return None
+
 @app.post("/api/chatbot/message")
 async def chatbot_message(request: ChatRequest):
     message = request.message.lower()
-    lang = request.language.capitalize()  # Capitalize to match "English" or "Hindi"
+    lang = request.language.capitalize()
 
-    # Check for conversational queries first
+    # 1. Check if message contains a family relation
+    relation_response = find_relation_response(message, lang)
+    if relation_response:
+        return {"response": relation_response}
+
+    # 2. Check for general conversational keywords
     conv_response = find_conversation_response(message, lang)
     if conv_response:
         return {"response": conv_response}
 
-    # Else try matching with keywords
+    # 3. Match against recipe/festival keywords
     matched_key = None
     for kw, key in KEYWORDS_MAP.items():
-        # Use regex word boundaries for better matching
         if re.search(r'\b' + re.escape(kw.lower()) + r'\b', message):
             matched_key = key
             break
 
     if not matched_key:
-        # If nothing matched, fallback response
         fallback = {
             "English": "Sorry, I don't have information on that. You can ask me about recipes or festivals.",
             "Hindi": "माफ़ करें, मेरे पास इस विषय में जानकारी नहीं है। आप मुझसे व्यंजन या त्योहारों के बारे में पूछ सकते हैं।"
@@ -106,16 +155,12 @@ async def chatbot_message(request: ChatRequest):
         raise HTTPException(status_code=404, detail="Content not found in selected language.")
 
     title = content["title"].get(lang, "")
-    
-    # Build response based on available sections
     response_parts = [f"**{title}**\n"]
 
-    # Details (list of steps)
     if "details" in content and lang in content["details"]:
         details = content["details"][lang]
         response_parts.append("\n".join([f"{i+1}. {step}" for i, step in enumerate(details)]))
 
-    # Ingredients and method for recipes
     if "ingredients" in content and lang in content["ingredients"]:
         ingredients = content["ingredients"][lang]
         response_parts.append("\nIngredients:\n" + "\n".join(ingredients))
@@ -128,5 +173,4 @@ async def chatbot_message(request: ChatRequest):
         response_parts.append("\nTip:\n" + content["tip"][lang])
 
     response_text = "\n\n".join(response_parts)
-
     return {"response": response_text}
