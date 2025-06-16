@@ -23,32 +23,34 @@ DATA_FILE = os.path.join(os.path.dirname(__file__), 'data.json')
 with open(DATA_FILE, 'r', encoding='utf-8') as f:
     data = json.load(f)
 
-# Flatten all recipe keys for regex matching
+# Flatten all recipe keys from all categories (pooja_rituals, satvik_recipes, kashmiri_dishes, general_recipes)
+recipe_categories = ['pooja_rituals', 'satvik_recipes', 'kashmiri_dishes', 'general_recipes']
 recipe_keywords = []
-for category, recipes in data['recipes'].items():
-    for key in recipes.keys():
+
+for category in recipe_categories:
+    category_data = data.get(category, {})
+    for key in category_data.keys():
         recipe_keywords.append(key.lower())
 
-# Relation keywords
-relation_keywords = list(data.get('relation_responses', {}).keys())
-
-# Conversation keywords
-conversation_keywords = list(data.get('conversation_responses', {}).keys())
+# Relation and conversation keywords (if present)
+relation_keywords = list(data.get('relation_responses', {}).keys()) if 'relation_responses' in data else []
+conversation_keywords = list(data.get('conversation_responses', {}).keys()) if 'conversation_responses' in data else []
 
 def find_recipe_by_keyword(keyword: str):
     keyword = keyword.lower()
-    for category, recipes in data['recipes'].items():
-        if keyword in recipes:
-            return recipes[keyword]
+    for category in recipe_categories:
+        category_data = data.get(category, {})
+        if keyword in category_data:
+            return category_data[keyword]
     return None
 
 def find_relation_response(keyword: str):
     keyword = keyword.lower()
-    return data.get('relation_responses', {}).get(keyword)
+    return data.get('relation_responses', {}).get(keyword) if 'relation_responses' in data else None
 
 def find_conversation_response(keyword: str):
     keyword = keyword.lower()
-    return data.get('conversation_responses', {}).get(keyword)
+    return data.get('conversation_responses', {}).get(keyword) if 'conversation_responses' in data else None
 
 class ChatRequest(BaseModel):
     message: str
@@ -78,18 +80,23 @@ async def chatbot_response(chat_request: ChatRequest):
         if re.search(r'\b' + re.escape(rec_key) + r'\b', user_msg):
             recipe = find_recipe_by_keyword(rec_key)
             if recipe:
-                title = recipe['title'].get(lang, recipe['title'].get('English', 'Recipe'))
+                title = recipe.get('title', {}).get(lang, recipe.get('title', {}).get('English', 'Recipe'))
                 ingredients = recipe.get('ingredients', {}).get(lang, [])
                 method = recipe.get('method', {}).get(lang, [])
                 details = recipe.get('details', {}).get(lang, [])
+                tip = recipe.get('tip', {}).get(lang, None)
+
                 # Prepare response text
                 response_text = f"**{title}**\n\n"
                 if ingredients:
                     response_text += "Ingredients:\n" + "\n".join(f"- {item}" for item in ingredients) + "\n\n"
                 if method:
-                    response_text += "Method:\n" + "\n".join(f"{idx+1}. {step}" for idx, step in enumerate(method)) + "\n"
+                    response_text += "Method:\n" + "\n".join(f"{idx+1}. {step}" for idx, step in enumerate(method)) + "\n\n"
                 if details:
-                    response_text += "Details:\n" + "\n".join(details) + "\n"
+                    response_text += "Details:\n" + "\n".join(details) + "\n\n"
+                if tip:
+                    response_text += f"Tip:\n{tip}\n"
+
                 return {"response": response_text.strip()}
 
     # Default fallback response
