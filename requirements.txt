@@ -1,2 +1,3 @@
-fastapi[standard]
-uvicorn[standard]
+fastapi
+uvicorn
+python-multipart
