@@ -60,6 +60,12 @@ aliases = {
     "poori": "urad_dal_poori",
     "puri": "urad_dal_poori",
 
+    # Haak aliases (add "kashmiri_haak" recipe in data.json)
+    "haak": "kashmiri_haak",
+    "kashmiri haak": "kashmiri_haak",
+    "haak saag": "kashmiri_haak",
+    "haak dish": "kashmiri_haak",
+
     # You can add more aliases here if you add more recipes
 
     # Examples of common typos or variations users might enter
@@ -107,8 +113,9 @@ async def chatbot_response(chat_request: ChatRequest):
     if user_msg in ["hi", "hello", "hey", "namaste", "नमस्ते"]:
         return {"response": "Hello! Ask me any family recipe or pooja ritual. 😊"}
 
-    # 2. Check aliases first
+    # 2. Check aliases first - find if any alias word is in user message and map it
     for alias_key, mapped_key in aliases.items():
+        # Use word boundary regex to avoid partial matches
         if re.search(r'\b' + re.escape(alias_key) + r'\b', user_msg):
             recipe = find_recipe_by_keyword(mapped_key)
             if recipe:
