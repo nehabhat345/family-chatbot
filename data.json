@@ -126,6 +126,44 @@
           "English": "Crispy outside, soft inside. Serve with curd, pickle, or aloo sabzi.",
           "Hindi": "यह पूड़ी बाहर से करारी और अंदर से नरम होती है। इसे दही, अचार या आलू की सब्जी के साथ परोसे।"
         }
+      },
+      "haak": {
+        "title": {
+          "English": "Haak (Kashmiri Collard Greens)",
+          "Hindi": "हाक (कश्मीरी साग)"
+        },
+        "ingredients": {
+          "English": [
+            "Haak leaves (collard greens)",
+            "Mustard oil",
+            "Dry red chili",
+            "Asafoetida (hing)",
+            "Salt"
+          ],
+          "Hindi": [
+            "हाक के पत्ते",
+            "सरसों का तेल",
+            "सूखी लाल मिर्च",
+            "हींग",
+            "नमक"
+          ]
+        },
+        "method": {
+          "English": [
+            "Wash haak leaves thoroughly.",
+            "Boil water and add salt and hing.",
+            "Add haak leaves and cook until tender.",
+            "Temper mustard oil with dry red chili and add to the cooked haak.",
+            "Serve hot."
+          ],
+          "Hindi": [
+            "हाक के पत्ते अच्छे से धो लें।",
+            "पानी उबालें, नमक और हींग डालें।",
+            "हाक डालकर नरम होने तक पकाएं।",
+            "सरसों का तेल गर्म करें, सूखी लाल मिर्च डालें और पकाए हुए हाक में डालें।",
+            "गरम परोसें।"
+          ]
+        }
       }
     },
     "general_recipes": {}

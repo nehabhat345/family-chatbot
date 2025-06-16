@@ -9,7 +9,7 @@ import difflib
 
 app = FastAPI()
 
-# Enable CORS
+# Enable CORS for all origins
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -18,20 +18,21 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Load data
+# Load data.json
 DATA_FILE = os.path.join(os.path.dirname(__file__), 'data.json')
 with open(DATA_FILE, 'r', encoding='utf-8') as f:
     data = json.load(f)
 
 recipe_categories = ['pooja_rituals', 'satvik_recipes', 'kashmiri_dishes', 'general_recipes']
 
-# Aliases dictionary for common variants and simpler user inputs
+# Aliases dictionary: common names, typos, and simpler user inputs mapped to keys in data.json
 aliases = {
     # Pooja rituals
     "karwa chauth": "karwa_chauth",
     "karwa chauth pooja": "karwa_chauth",
     "karwachauth": "karwa_chauth",
     "karva chauth": "karwa_chauth",
+    "karwachauth pooja": "karwa_chauth",
 
     "gowardhan pooja": "gowardhan_pooja",
     "govardhan pooja": "gowardhan_pooja",
@@ -40,12 +41,14 @@ aliases = {
     "kaddu": "pumpkin_recipe",
     "pumpkin": "pumpkin_recipe",
     "pumpkin recipe": "pumpkin_recipe",
+    "kaddu recipe": "pumpkin_recipe",
 
     "karela": "bittergourd_recipe",
     "bittergourd": "bittergourd_recipe",
     "bitter gourd": "bittergourd_recipe",
     "karela recipe": "bittergourd_recipe",
     "bittergourd recipe": "bittergourd_recipe",
+    "kaarela": "bittergourd_recipe",
 
     # Kashmiri dishes
     "dum aloo": "kashmiri_dum_aloo",
@@ -59,32 +62,30 @@ aliases = {
     "udad dal puri": "urad_dal_poori",
     "poori": "urad_dal_poori",
     "puri": "urad_dal_poori",
+    "urad": "urad_dal_poori",
 
-    # Haak aliases (add "kashmiri_haak" recipe in data.json)
-    "haak": "kashmiri_haak",
-    "kashmiri haak": "kashmiri_haak",
-    "haak saag": "kashmiri_haak",
-    "haak dish": "kashmiri_haak",
+    # Haak aliases (Kashmiri green leafy vegetable dish)
+    "haak": "haak_recipe",
+    "haak recipe": "haak_recipe",
+    "hak": "haak_recipe",
+    "kashmiri haak": "haak_recipe",
+    "kashmiri hak": "haak_recipe",
 
-    # You can add more aliases here if you add more recipes
-
-    # Examples of common typos or variations users might enter
-    "kaarela": "bittergourd_recipe",
-    "kaddu recipe": "pumpkin_recipe",
-    "karwachauth pooja": "karwa_chauth",
+    # Add more aliases here as you add more recipes or common variations
 }
 
-# Prepare recipe keywords for regex match (original keys only)
+# Build regex patterns for all recipes keys to match user messages
 recipe_keywords = []
 recipe_key_strings = []
 
 for category in recipe_categories:
     for key in data['recipes'].get(category, {}):
-        # regex pattern allows matching the key with underscores replaced by any characters in between (like spaces)
+        # regex pattern allows matching the key with underscores replaced by any characters (like spaces)
         pattern = re.compile(r'\b' + r'.*'.join(re.escape(word) for word in key.split('_')) + r'\b', re.IGNORECASE)
         recipe_keywords.append((key, pattern))
         recipe_key_strings.append(key)
 
+# Relation and conversation keywords from data.json
 relation_keywords = list(data.get('relation_responses', {}).keys())
 conversation_keywords = list(data.get('conversation_responses', {}).keys())
 
@@ -113,15 +114,14 @@ async def chatbot_response(chat_request: ChatRequest):
     if user_msg in ["hi", "hello", "hey", "namaste", "नमस्ते"]:
         return {"response": "Hello! Ask me any family recipe or pooja ritual. 😊"}
 
-    # 2. Check aliases first - find if any alias word is in user message and map it
+    # 2. Check aliases first (full word match)
     for alias_key, mapped_key in aliases.items():
-        # Use word boundary regex to avoid partial matches
         if re.search(r'\b' + re.escape(alias_key) + r'\b', user_msg):
             recipe = find_recipe_by_keyword(mapped_key)
             if recipe:
                 return format_recipe_response(recipe, mapped_key, lang)
 
-            # If alias maps to relation or conversation responses, check those as well
+            # Also check relation and conversation responses if any
             rel_resp = find_relation_response(mapped_key)
             if rel_resp:
                 return {"response": rel_resp.get(lang, rel_resp.get("English"))}
@@ -129,34 +129,34 @@ async def chatbot_response(chat_request: ChatRequest):
             if conv_resp:
                 return {"response": conv_resp.get(lang, conv_resp.get("English"))}
 
-    # 3. Relation keywords
+    # 3. Check relation keywords
     for rel_key in relation_keywords:
         if re.search(r'\b' + re.escape(rel_key) + r'\b', user_msg):
             res = find_relation_response(rel_key)
             if res:
                 return {"response": res.get(lang, res.get("English"))}
 
-    # 4. Conversation keywords
+    # 4. Check conversation keywords
     for conv_key in conversation_keywords:
         if re.search(r'\b' + re.escape(conv_key) + r'\b', user_msg):
             res = find_conversation_response(conv_key)
             if res:
                 return {"response": res.get(lang, res.get("English"))}
 
-    # 5. Regex recipe match
+    # 5. Regex pattern matching for recipes
     for key, pattern in recipe_keywords:
         if pattern.search(user_msg):
             recipe = find_recipe_by_keyword(key)
             return format_recipe_response(recipe, key, lang)
 
-    # 6. Fuzzy match fallback
+    # 6. Fuzzy matching fallback (with cutoff 0.6)
     close_matches = difflib.get_close_matches(user_msg.replace(" ", "_"), recipe_key_strings, n=1, cutoff=0.6)
     if close_matches:
         key = close_matches[0]
         recipe = find_recipe_by_keyword(key)
         return format_recipe_response(recipe, key, lang)
 
-    # 7. Fallback response
+    # 7. Fallback response when nothing matches
     fallback = {
         "English": "Sorry, I couldn't find anything related. Can you try asking differently?",
         "Hindi": "माफ़ कीजिए, मुझे इस बारे में जानकारी नहीं मिली। कृपया कुछ और पूछें।"
@@ -167,7 +167,7 @@ def format_recipe_response(recipe, key, lang):
     if not recipe:
         return {"response": "Recipe not found."}
 
-    title = recipe['title'].get(lang, recipe['title'].get('English', 'Recipe'))
+    title = recipe.get('title', {}).get(lang, recipe.get('title', {}).get('English', 'Recipe'))
     ingredients = recipe.get('ingredients', {}).get(lang, [])
     method = recipe.get('method', {}).get(lang, [])
     details = recipe.get('details', {}).get(lang, [])
