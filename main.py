@@ -25,7 +25,7 @@ with open(DATA_FILE, 'r', encoding='utf-8') as f:
 
 recipe_categories = ['pooja_rituals', 'satvik_recipes', 'kashmiri_dishes', 'general_recipes']
 
-# Aliases dictionary: common names, typos, and simpler user inputs mapped to keys in data.json
+# Aliases to map user-friendly terms to keys in data.json
 aliases = {
     # Pooja rituals
     "karwa chauth": "karwa_chauth",
@@ -111,8 +111,9 @@ async def chatbot_response(chat_request: ChatRequest):
     lang = chat_request.language if chat_request.language in ["English", "Hindi"] else "English"
 
     # 1. Greetings
-    if user_msg in ["hi", "hello", "hey", "namaste", "नमस्ते"]:
-        return {"response": "Hello! Ask me any family recipe or pooja ritual. 😊"}
+    greetings = ["hi", "hello", "hey", "namaste", "नमस्ते"]
+    if any(g in user_msg for g in greetings):
+        return {"response": "Hello! I'm Nehu 😊 Ask me any family recipe or pooja ritual."}
 
     # 2. Check aliases first (full word match)
     for alias_key, mapped_key in aliases.items():
@@ -161,11 +162,28 @@ async def chatbot_response(chat_request: ChatRequest):
         "English": "Sorry, I couldn't find anything related. Can you try asking differently?",
         "Hindi": "माफ़ कीजिए, मुझे इस बारे में जानकारी नहीं मिली। कृपया कुछ और पूछें।"
     }
-    return {"response": fallback[lang]}
+
+    # Detect if user message looks like a greeting or relation or conversation keyword for fallback context
+    if any(g in user_msg for g in greetings):
+        return {"response": fallback[lang]}
+    for key in relation_keywords + conversation_keywords:
+        if re.search(r'\b' + re.escape(key) + r'\b', user_msg):
+            return {"response": fallback[lang]}
+
+    # If the message might be about food/recipe or pooja, mention that
+    possible_recipe_or_pooja = any(
+        kw in user_msg for kw in ["recipe", "pooja", "food", "dish", "cooking", "cook", "how to make", "kaise banaye"]
+    )
+    if possible_recipe_or_pooja:
+        return {"response": fallback[lang]}
+
+    # General fallback for unknown messages
+    return {"response": "Nehu didn't quite get that. Could you please rephrase or ask about a family recipe or ritual?"}
 
 def format_recipe_response(recipe, key, lang):
     if not recipe:
-        return {"response": "Recipe not found."}
+        # Distinguish fallback response for missing recipe specifically
+        return {"response": f"Sorry, I couldn't find the recipe for '{key.replace('_', ' ')}'. Please try asking something else."}
 
     title = recipe.get('title', {}).get(lang, recipe.get('title', {}).get('English', 'Recipe'))
     ingredients = recipe.get('ingredients', {}).get(lang, [])
