@@ -318,6 +318,82 @@
                   "नद्रू को दही की ग्रेवी में घी के साथ पकाएं।"
                ]
             }
+         },
+         "kashmiri_dishes":{
+            "dum_aloo":{
+               "title":{
+                  "English":"Kashmiri Dum Aloo",
+                  "Hindi":"कश्मीरी दम आलू"
+               },
+               "ingredients":{
+                  "English":[
+                     "500g baby potatoes",
+                     "1 cup curd (yogurt), whisked",
+                     "2 tbsp mustard oil",
+                     "1 tsp cumin seeds",
+                     "2-3 cloves",
+                     "1 black cardamom",
+                     "1-2 green cardamom",
+                     "1 small cinnamon stick",
+                     "1 bay leaf",
+                     "1/2 tsp hing (asafoetida)",
+                     "1 tsp ginger powder (saunth)",
+                     "1 tsp fennel powder",
+                     "1/2 tsp turmeric powder",
+                     "1 tsp Kashmiri red chili powder",
+                     "Salt to taste"
+                  ],
+                  "Hindi":[
+                     "500 ग्राम छोटे आलू",
+                     "1 कप दही (फेंटा हुआ)",
+                     "2 बड़े चम्मच सरसों का तेल",
+                     "1 छोटा चम्मच जीरा",
+                     "2-3 लौंग",
+                     "1 बड़ी इलायची",
+                     "1-2 छोटी इलायची",
+                     "1 छोटा टुकड़ा दालचीनी",
+                     "1 तेज पत्ता",
+                     "1/2 छोटा चम्मच हींग",
+                     "1 छोटा चम्मच सौंठ पाउडर",
+                     "1 छोटा चम्मच सौंफ पाउडर",
+                     "1/2 छोटा चम्मच हल्दी पाउडर",
+                     "1 छोटा चम्मच कश्मीरी लाल मिर्च पाउडर",
+                     "नमक स्वादानुसार"
+                  ]
+               },
+               "method":{
+                  "English":[
+                     "Boil the baby potatoes until tender, peel and prick them with a fork.",
+                     "Heat mustard oil until smoky. Fry the potatoes till golden and set aside.",
+                     "In the same oil, add cumin, whole spices (cloves, cardamoms, cinnamon, bay leaf) and sauté.",
+                     "Add hing, then the whisked curd slowly while stirring.",
+                     "Mix in turmeric, ginger powder, fennel powder, chili powder, and salt.",
+                     "Add fried potatoes and let it simmer on low heat for 20–25 minutes.",
+                     "Add water as needed to adjust the consistency.",
+                     "Serve hot with steamed rice."
+                  ],
+                  "Hindi":[
+                     "आलू को उबाल लें, छीलें और कांटे से छेद करें।",
+                     "सरसों का तेल धुआं उठने तक गरम करें। उसमें आलू तलें और अलग रखें।",
+                     "उसी तेल में जीरा, साबुत मसाले डालें और भूनें।",
+                     "अब हींग डालें और फिर फेंटा हुआ दही धीरे-धीरे डालें।",
+                     "फिर हल्दी, सौंठ, सौंफ पाउडर, लाल मिर्च और नमक मिलाएं।",
+                     "तले हुए आलू डालें और धीमी आंच पर 20–25 मिनट तक पकाएं।",
+                     "आवश्यकतानुसार पानी डालकर ग्रेवी का गाढ़ापन समायोजित करें।",
+                     "गरमा गरम चावल के साथ परोसें।"
+                  ]
+               },
+               "tips":{
+                  "English":[
+                     "Use mustard oil for authentic flavor.",
+                     "Do not overboil the potatoes; they should remain firm."
+                  ],
+                  "Hindi":[
+                     "असली स्वाद के लिए सरसों का तेल इस्तेमाल करें।",
+                     "आलू ज्यादा न उबालें, वरना टूट सकते हैं।"
+                  ]
+               }
+            }
          }
       },
       "general_recipes":{
