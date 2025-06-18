@@ -67,21 +67,10 @@ aliases = {
 
     "fried rice": "fried_rice",
     "friend rice": "fried_rice",
+
     "food": "food_general",
     "food recipe": "food_general",
     "recipes": "food_general"
-}
-
-# Common general keywords to trigger generic response
-general_keywords = {
-    "food": {
-        "English": "Would you like a recipe suggestion? Try asking for 'fried rice', 'dum aloo', or 'urad dal poori' 😊",
-        "Hindi": "आप कोई रेसिपी जानना चाहते हैं? आप 'फ्राइड राइस', 'दम आलू', या 'उड़द दाल पूरी' पूछ सकते हैं 😊"
-    },
-    "pooja": {
-        "English": "Looking for a pooja ritual? You can ask about 'Karwa Chauth' or 'Gowardhan Pooja'.",
-        "Hindi": "क्या आप कोई पूजा विधि जानना चाहते हैं? आप 'करवा चौथ' या 'गोवर्धन पूजा' के बारे में पूछ सकते हैं।"
-    }
 }
 
 recipe_keywords = []
@@ -133,9 +122,8 @@ async def chatbot_response(chat_request: ChatRequest):
             "English": "Hello! I'm Nehu 😊 Ask me any family recipe or pooja ritual.",
             "Hindi": "नमस्ते! मैं नेहू हूँ 😊 मुझसे कोई भी पारिवारिक रेसिपी या पूजा विधि पूछें।"
         }
-        return {"response": greet_msg[lang], "detected_language": lang}
+        return {"response": greet_msg[lang]}
 
-    # Alias matching
     for alias_key, mapped_key in aliases.items():
         if re.search(r'\b' + re.escape(alias_key) + r'\b', user_msg):
             recipe = find_recipe_by_keyword(mapped_key)
@@ -147,8 +135,6 @@ async def chatbot_response(chat_request: ChatRequest):
             conv_resp = find_conversation_response(mapped_key)
             if conv_resp:
                 return {"response": conv_resp.get(lang)}
-            if mapped_key in general_keywords:
-                return {"response": general_keywords[mapped_key].get(lang)}
 
     for rel_key in relation_keywords:
         if re.search(r'\b' + re.escape(rel_key) + r'\b', user_msg):
@@ -162,10 +148,6 @@ async def chatbot_response(chat_request: ChatRequest):
             if res:
                 return {"response": res.get(lang)}
 
-    for gkey in general_keywords:
-        if re.search(r'\b' + re.escape(gkey) + r'\b', user_msg):
-            return {"response": general_keywords[gkey].get(lang)}
-
     for key, pattern in recipe_keywords:
         if pattern.search(user_msg):
             recipe = find_recipe_by_keyword(key)
@@ -177,16 +159,19 @@ async def chatbot_response(chat_request: ChatRequest):
         recipe = find_recipe_by_keyword(key)
         return format_recipe_response(recipe, key, lang)
 
-    # ✅ Typo suggestion
-    all_possible_keys = list(aliases.keys()) + relation_keywords + conversation_keywords + list(general_keywords.keys()) + recipe_key_strings
-    typo_suggestions = difflib.get_close_matches(user_msg, all_possible_keys, n=1, cutoff=0.7)
+    # Suggest likely close alias
+    alias_keys = list(aliases.keys())
+    typo_suggestions = difflib.get_close_matches(user_msg.strip(), alias_keys, n=1, cutoff=0.7)
     if typo_suggestions:
         suggestion = typo_suggestions[0]
         correction_msg = {
             "English": f"Did you mean **'{suggestion}'**?",
             "Hindi": f"क्या आप **'{suggestion}'** कहना चाह रहे थे?"
         }
-        return {"response": correction_msg[lang]}
+        return {
+            "response": correction_msg[lang],
+            "suggested_keyword": suggestion
+        }
 
     fallback_msg = {
         "English": "Sorry, I couldn't find anything related. Can you try asking differently?",
