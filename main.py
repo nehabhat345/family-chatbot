@@ -146,7 +146,6 @@ async def chatbot_response(chat_request: ChatRequest):
         }
         return {"response": greet_msg[lang]}
 
-    # Handle yes/no answers intelligently
     yes_words = {"yes", "yeah", "yup", "haan", "हाँ", "yes please", "of course"}
     no_words = {"no", "nah", "nope", "nahi", "नहीं", "na"}
 
@@ -163,6 +162,37 @@ async def chatbot_response(chat_request: ChatRequest):
             "Hindi": "ठीक है। अगर आपको और कुछ चाहिए तो बस पूछिए।"
         }
         return {"response": no_resp[lang]}
+
+    # General keywords and synonyms for broader matches
+    general_topic_keywords = {
+        "food": ["food", "khana", "khana peena", "khana-pina", "dish", "recipes", "recipe", "cooking", "cuisine"],
+        "pooja": ["pooja", "puja", "ritual", "vidhi", "prayer", "havan", "aarti"],
+        "culture": ["culture", "tradition", "parampara", "custom", "heritage", "sanskaar"],
+        "family": ["family", "ghar", "ghar ki baat", "rishtay", "relations"],
+    }
+
+    for topic, keywords in general_topic_keywords.items():
+        for kw in keywords:
+            if re.search(r'\b' + re.escape(kw) + r'\b', user_msg):
+                general_resp = {
+                    "food": {
+                        "English": "I can share family recipes including Satvik, Kashmiri, and general dishes. What would you like to try?",
+                        "Hindi": "मैं पारिवारिक रेसिपी जैसे सात्विक, कश्मीरी, और सामान्य व्यंजन बता सकती हूँ। आप क्या जानना चाहेंगे?"
+                    },
+                    "pooja": {
+                        "English": "I can guide you through various pooja rituals like Karwa Chauth and Govardhan Pooja. What would you like to know?",
+                        "Hindi": "मैं आपको करवा चौथ और गोवर्धन पूजा जैसी पूजा विधियों के बारे में बता सकती हूँ। आप क्या जानना चाहेंगे?"
+                    },
+                    "culture": {
+                        "English": "Our family's culture and traditions are rich! Feel free to ask about rituals, festivals, or recipes.",
+                        "Hindi": "हमारे परिवार की संस्कृति और परंपराएं बहुत समृद्ध हैं! पूजा, त्योहार या रेसिपी के बारे में पूछें।"
+                    },
+                    "family": {
+                        "English": "I can share stories, recipes, and rituals related to family traditions. What interests you?",
+                        "Hindi": "मैं परिवार की परंपराओं से जुड़ी कहानियाँ, रेसिपी और पूजा विधियाँ साझा कर सकती हूँ। आप क्या जानना चाहेंगे?"
+                    }
+                }
+                return {"response": general_resp[topic][lang]}
 
     # Exact alias match
     if user_msg in aliases:
