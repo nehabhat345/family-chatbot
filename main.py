@@ -72,23 +72,15 @@ aliases = {
     "recipes": "food_general"
 }
 
-# General topic triggers
+# Common general keywords to trigger generic response
 general_keywords = {
     "food": {
-        "English": "Are you looking for something delicious? You can ask me about any family recipe like 'dum aloo', 'urad dal poori', or 'pumpkin curry'.",
-        "Hindi": "क्या आप कुछ स्वादिष्ट ढूंढ रहे हैं? आप मुझसे 'दम आलू', 'उड़द दाल पूड़ी' या 'कद्दू की सब्ज़ी' जैसी पारिवारिक रेसिपी पूछ सकते हैं।"
-    },
-    "khana": {
-        "English": "Let me know what kind of food you're craving. I know many homely Indian recipes!",
-        "Hindi": "आप किस तरह का खाना ढूंढ रहे हैं बताएं। मुझे कई घरेलू भारतीय रेसिपीज़ आती हैं!"
+        "English": "Would you like a recipe suggestion? Try asking for 'fried rice', 'dum aloo', or 'urad dal poori' 😊",
+        "Hindi": "आप कोई रेसिपी जानना चाहते हैं? आप 'फ्राइड राइस', 'दम आलू', या 'उड़द दाल पूरी' पूछ सकते हैं 😊"
     },
     "pooja": {
-        "English": "I can guide you on pooja rituals like Karwa Chauth or Gowardhan Pooja.",
-        "Hindi": "मैं करवा चौथ या गोवर्धन पूजा जैसी पूजा विधियों में आपकी मदद कर सकती हूँ।"
-    },
-    "culture": {
-        "English": "Our culture is full of beautiful rituals and flavors. Want a recipe or a pooja detail?",
-        "Hindi": "हमारी संस्कृति में अनेक स्वादिष्ट रेसिपी और पूजा विधियाँ हैं। आप किस बारे में जानना चाहेंगे?"
+        "English": "Looking for a pooja ritual? You can ask about 'Karwa Chauth' or 'Gowardhan Pooja'.",
+        "Hindi": "क्या आप कोई पूजा विधि जानना चाहते हैं? आप 'करवा चौथ' या 'गोवर्धन पूजा' के बारे में पूछ सकते हैं।"
     }
 }
 
@@ -143,19 +135,20 @@ async def chatbot_response(chat_request: ChatRequest):
         }
         return {"response": greet_msg[lang], "detected_language": lang}
 
+    # Alias matching
     for alias_key, mapped_key in aliases.items():
         if re.search(r'\b' + re.escape(alias_key) + r'\b', user_msg):
             recipe = find_recipe_by_keyword(mapped_key)
             if recipe:
                 return format_recipe_response(recipe, mapped_key, lang)
-
             rel_resp = find_relation_response(mapped_key)
             if rel_resp:
                 return {"response": rel_resp.get(lang)}
-
             conv_resp = find_conversation_response(mapped_key)
             if conv_resp:
                 return {"response": conv_resp.get(lang)}
+            if mapped_key in general_keywords:
+                return {"response": general_keywords[mapped_key].get(lang)}
 
     for rel_key in relation_keywords:
         if re.search(r'\b' + re.escape(rel_key) + r'\b', user_msg):
@@ -169,9 +162,9 @@ async def chatbot_response(chat_request: ChatRequest):
             if res:
                 return {"response": res.get(lang)}
 
-    for keyword, message in general_keywords.items():
-        if re.search(r'\b' + re.escape(keyword) + r'\b', user_msg):
-            return {"response": message[lang], "detected_language": lang}
+    for gkey in general_keywords:
+        if re.search(r'\b' + re.escape(gkey) + r'\b', user_msg):
+            return {"response": general_keywords[gkey].get(lang)}
 
     for key, pattern in recipe_keywords:
         if pattern.search(user_msg):
@@ -183,6 +176,17 @@ async def chatbot_response(chat_request: ChatRequest):
         key = close_matches[0]
         recipe = find_recipe_by_keyword(key)
         return format_recipe_response(recipe, key, lang)
+
+    # ✅ Typo suggestion
+    all_possible_keys = list(aliases.keys()) + relation_keywords + conversation_keywords + list(general_keywords.keys()) + recipe_key_strings
+    typo_suggestions = difflib.get_close_matches(user_msg, all_possible_keys, n=1, cutoff=0.7)
+    if typo_suggestions:
+        suggestion = typo_suggestions[0]
+        correction_msg = {
+            "English": f"Did you mean **'{suggestion}'**?",
+            "Hindi": f"क्या आप **'{suggestion}'** कहना चाह रहे थे?"
+        }
+        return {"response": correction_msg[lang]}
 
     fallback_msg = {
         "English": "Sorry, I couldn't find anything related. Can you try asking differently?",
