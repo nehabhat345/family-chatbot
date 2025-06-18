@@ -101,84 +101,6 @@ class ChatRequest(BaseModel):
     message: str
     language: Optional[str] = None
 
-@app.post("/api/chatbot/message")
-async def chatbot_response(chat_request: ChatRequest):
-    user_msg = chat_request.message.strip().lower()
-    lang = chat_request.language
-
-    if not lang:
-        try:
-            lang_code = detect(user_msg)
-        except:
-            lang_code = "en"
-        lang = "Hindi" if lang_code == "hi" else "English"
-
-    if lang not in ["English", "Hindi"]:
-        lang = "English"
-
-    greetings = ["hi", "hello", "hey", "namaste", "नमस्ते"]
-    if any(g in user_msg for g in greetings):
-        greet_msg = {
-            "English": "Hello! I'm Nehu 😊 Ask me any family recipe or pooja ritual.",
-            "Hindi": "नमस्ते! मैं नेहू हूँ 😊 मुझसे कोई भी पारिवारिक रेसिपी या पूजा विधि पूछें।"
-        }
-        return {"response": greet_msg[lang]}
-
-    for alias_key, mapped_key in aliases.items():
-        if re.search(r'\b' + re.escape(alias_key) + r'\b', user_msg):
-            recipe = find_recipe_by_keyword(mapped_key)
-            if recipe:
-                return format_recipe_response(recipe, mapped_key, lang)
-            rel_resp = find_relation_response(mapped_key)
-            if rel_resp:
-                return {"response": rel_resp.get(lang)}
-            conv_resp = find_conversation_response(mapped_key)
-            if conv_resp:
-                return {"response": conv_resp.get(lang)}
-
-    for rel_key in relation_keywords:
-        if re.search(r'\b' + re.escape(rel_key) + r'\b', user_msg):
-            res = find_relation_response(rel_key)
-            if res:
-                return {"response": res.get(lang)}
-
-    for conv_key in conversation_keywords:
-        if re.search(r'\b' + re.escape(conv_key) + r'\b', user_msg):
-            res = find_conversation_response(conv_key)
-            if res:
-                return {"response": res.get(lang)}
-
-    for key, pattern in recipe_keywords:
-        if pattern.search(user_msg):
-            recipe = find_recipe_by_keyword(key)
-            return format_recipe_response(recipe, key, lang)
-
-    close_matches = difflib.get_close_matches(user_msg.replace(" ", "_"), recipe_key_strings, n=1, cutoff=0.6)
-    if close_matches:
-        key = close_matches[0]
-        recipe = find_recipe_by_keyword(key)
-        return format_recipe_response(recipe, key, lang)
-
-    # Suggest likely close alias
-    alias_keys = list(aliases.keys())
-    typo_suggestions = difflib.get_close_matches(user_msg.strip(), alias_keys, n=1, cutoff=0.7)
-    if typo_suggestions:
-        suggestion = typo_suggestions[0]
-        correction_msg = {
-            "English": f"Did you mean **'{suggestion}'**?",
-            "Hindi": f"क्या आप **'{suggestion}'** कहना चाह रहे थे?"
-        }
-        return {
-            "response": correction_msg[lang],
-            "suggested_keyword": suggestion
-        }
-
-    fallback_msg = {
-        "English": "Sorry, I couldn't find anything related. Can you try asking differently?",
-        "Hindi": "माफ़ कीजिए, मुझे इस बारे में जानकारी नहीं मिली। कृपया कुछ और पूछें।"
-    }
-    return {"response": fallback_msg[lang]}
-
 def format_recipe_response(recipe, key, lang):
     if not recipe:
         return {"response": f"Sorry, I couldn't find the recipe for '{key.replace('_', ' ')}'."}
@@ -200,3 +122,117 @@ def format_recipe_response(recipe, key, lang):
         response_text += "Tip:\n" + tip
 
     return {"response": response_text.strip()}
+
+@app.post("/api/chatbot/message")
+async def chatbot_response(chat_request: ChatRequest):
+    user_msg = chat_request.message.strip().lower()
+    lang = chat_request.language
+
+    if not lang:
+        try:
+            lang_code = detect(user_msg)
+        except:
+            lang_code = "en"
+        lang = "Hindi" if lang_code == "hi" else "English"
+
+    if lang not in ["English", "Hindi"]:
+        lang = "English"
+
+    greetings = ["hi", "hello", "hey", "namaste", "नमस्ते"]
+    if any(g == user_msg or f" {g} " in f" {user_msg} " for g in greetings):
+        greet_msg = {
+            "English": "Hello! I'm Nehu 😊 Ask me any family recipe or pooja ritual.",
+            "Hindi": "नमस्ते! मैं नेहू हूँ 😊 मुझसे कोई भी पारिवारिक रेसिपी या पूजा विधि पूछें।"
+        }
+        return {"response": greet_msg[lang]}
+
+    # Handle yes/no answers intelligently
+    yes_words = {"yes", "yeah", "yup", "haan", "हाँ", "yes please", "of course"}
+    no_words = {"no", "nah", "nope", "nahi", "नहीं", "na"}
+
+    if user_msg in yes_words:
+        yes_resp = {
+            "English": "Great! How else can I help you? You can ask for recipes or pooja rituals.",
+            "Hindi": "बहुत अच्छा! मैं और कैसे मदद कर सकती हूँ? आप मुझसे रेसिपी या पूजा विधि पूछ सकते हैं।"
+        }
+        return {"response": yes_resp[lang]}
+
+    if user_msg in no_words:
+        no_resp = {
+            "English": "Alright. If you need anything else, just ask!",
+            "Hindi": "ठीक है। अगर आपको और कुछ चाहिए तो बस पूछिए।"
+        }
+        return {"response": no_resp[lang]}
+
+    # Check exact alias match first (to avoid fuzzy suggesting the same word)
+    if user_msg in aliases:
+        mapped_key = aliases[user_msg]
+        recipe = find_recipe_by_keyword(mapped_key)
+        if recipe:
+            return format_recipe_response(recipe, mapped_key, lang)
+        rel_resp = find_relation_response(mapped_key)
+        if rel_resp:
+            return {"response": rel_resp.get(lang)}
+        conv_resp = find_conversation_response(mapped_key)
+        if conv_resp:
+            return {"response": conv_resp.get(lang)}
+
+    # Regex alias matching
+    for alias_key, mapped_key in aliases.items():
+        if re.search(r'\b' + re.escape(alias_key) + r'\b', user_msg):
+            recipe = find_recipe_by_keyword(mapped_key)
+            if recipe:
+                return format_recipe_response(recipe, mapped_key, lang)
+            rel_resp = find_relation_response(mapped_key)
+            if rel_resp:
+                return {"response": rel_resp.get(lang)}
+            conv_resp = find_conversation_response(mapped_key)
+            if conv_resp:
+                return {"response": conv_resp.get(lang)}
+
+    # Relation keyword matching
+    for rel_key in relation_keywords:
+        if re.search(r'\b' + re.escape(rel_key) + r'\b', user_msg):
+            res = find_relation_response(rel_key)
+            if res:
+                return {"response": res.get(lang)}
+
+    # Conversation keyword matching
+    for conv_key in conversation_keywords:
+        if re.search(r'\b' + re.escape(conv_key) + r'\b', user_msg):
+            res = find_conversation_response(conv_key)
+            if res:
+                return {"response": res.get(lang)}
+
+    # Recipe keyword matching
+    for key, pattern in recipe_keywords:
+        if pattern.search(user_msg):
+            recipe = find_recipe_by_keyword(key)
+            return format_recipe_response(recipe, key, lang)
+
+    # Fuzzy match on recipe keys
+    close_matches = difflib.get_close_matches(user_msg.replace(" ", "_"), recipe_key_strings, n=1, cutoff=0.6)
+    if close_matches:
+        key = close_matches[0]
+        recipe = find_recipe_by_keyword(key)
+        return format_recipe_response(recipe, key, lang)
+
+    # Fuzzy match alias keys to suggest correction (only if suggestion differs)
+    alias_keys = list(aliases.keys())
+    typo_suggestions = difflib.get_close_matches(user_msg.strip(), alias_keys, n=1, cutoff=0.7)
+    if typo_suggestions and typo_suggestions[0].lower() != user_msg:
+        suggestion = typo_suggestions[0]
+        correction_msg = {
+            "English": f"Did you mean **'{suggestion}'**?",
+            "Hindi": f"क्या आप **'{suggestion}'** कहना चाह रहे थे?"
+        }
+        return {
+            "response": correction_msg[lang],
+            "suggested_keyword": suggestion
+        }
+
+    fallback_msg = {
+        "English": "Sorry, I couldn't find anything related. Can you try asking differently?",
+        "Hindi": "माफ़ कीजिए, मुझे इस बारे में जानकारी नहीं मिली। कृपया कुछ और पूछें।"
+    }
+    return {"response": fallback_msg[lang]}
