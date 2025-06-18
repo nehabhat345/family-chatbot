@@ -217,14 +217,20 @@ async def chatbot_response(chat_request: ChatRequest):
         recipe = find_recipe_by_keyword(key)
         return format_recipe_response(recipe, key, lang)
 
-    # Fuzzy alias suggestion
+    # Fuzzy alias suggestion with extra guidance
     alias_keys = list(aliases.keys())
     typo_suggestions = difflib.get_close_matches(user_msg.strip(), alias_keys, n=1, cutoff=0.7)
     if typo_suggestions and typo_suggestions[0].lower() != user_msg:
         suggestion = typo_suggestions[0]
         correction_msg = {
-            "English": f"Did you mean **'{suggestion}'**?",
-            "Hindi": f"क्या आप **'{suggestion}'** कहना चाह रहे थे?"
+            "English": (
+                f"Did you mean **'{suggestion}'**?\n"
+                "You can ask me about Satvik, Kashmiri, Pooja rituals, or general family recipes."
+            ),
+            "Hindi": (
+                f"क्या आप **'{suggestion}'** कहना चाह रहे थे?\n"
+                "आप मुझसे सात्विक, कश्मीरी, पूजा विधि या सामान्य पारिवारिक रेसिपी पूछ सकते हैं।"
+            )
         }
         return {
             "response": correction_msg[lang],
