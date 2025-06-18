@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Optional
@@ -6,10 +6,10 @@ import json
 import os
 import re
 import difflib
+from langdetect import detect
 
 app = FastAPI()
 
-# Enable CORS for all origins
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -18,16 +18,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Load data.json
 DATA_FILE = os.path.join(os.path.dirname(__file__), 'data.json')
 with open(DATA_FILE, 'r', encoding='utf-8') as f:
     data = json.load(f)
 
 recipe_categories = ['pooja_rituals', 'satvik_recipes', 'kashmiri_dishes', 'general_recipes']
 
-# Aliases to map user-friendly terms to keys in data.json
 aliases = {
-    # Pooja rituals
     "karwa chauth": "karwa_chauth",
     "karwa chauth pooja": "karwa_chauth",
     "karwachauth": "karwa_chauth",
@@ -37,7 +34,6 @@ aliases = {
     "gowardhan pooja": "gowardhan_pooja",
     "govardhan pooja": "gowardhan_pooja",
 
-    # Satvik recipes
     "kaddu": "pumpkin_recipe",
     "pumpkin": "pumpkin_recipe",
     "pumpkin recipe": "pumpkin_recipe",
@@ -50,7 +46,6 @@ aliases = {
     "bittergourd recipe": "bittergourd_recipe",
     "kaarela": "bittergourd_recipe",
 
-    # Kashmiri dishes
     "dum aloo": "kashmiri_dum_aloo",
     "duma aloo": "kashmiri_dum_aloo",
     "kashmiri dum aloo": "kashmiri_dum_aloo",
@@ -64,28 +59,22 @@ aliases = {
     "puri": "urad_dal_poori",
     "urad": "urad_dal_poori",
 
-    # Haak aliases (Kashmiri green leafy vegetable dish)
     "haak": "haak_recipe",
     "haak recipe": "haak_recipe",
     "hak": "haak_recipe",
     "kashmiri haak": "haak_recipe",
     "kashmiri hak": "haak_recipe",
-
-    # Add more aliases here as you add more recipes or common variations
 }
 
-# Build regex patterns for all recipes keys to match user messages
 recipe_keywords = []
 recipe_key_strings = []
 
 for category in recipe_categories:
     for key in data['recipes'].get(category, {}):
-        # regex pattern allows matching the key with underscores replaced by any characters (like spaces)
         pattern = re.compile(r'\b' + r'.*'.join(re.escape(word) for word in key.split('_')) + r'\b', re.IGNORECASE)
         recipe_keywords.append((key, pattern))
         recipe_key_strings.append(key)
 
-# Relation and conversation keywords from data.json
 relation_keywords = list(data.get('relation_responses', {}).keys())
 conversation_keywords = list(data.get('conversation_responses', {}).keys())
 
@@ -103,87 +92,76 @@ def find_conversation_response(keyword: str):
 
 class ChatRequest(BaseModel):
     message: str
-    language: Optional[str] = "English"
+    language: Optional[str] = None
 
 @app.post("/api/chatbot/message")
 async def chatbot_response(chat_request: ChatRequest):
     user_msg = chat_request.message.strip().lower()
-    lang = chat_request.language if chat_request.language in ["English", "Hindi"] else "English"
+    lang = chat_request.language
 
-    # 1. Greetings
+    if not lang:
+        try:
+            lang_code = detect(user_msg)
+        except:
+            lang_code = "en"
+        lang = "Hindi" if lang_code == "hi" else "English"
+
+    # Only support English and Hindi
+    if lang not in ["English", "Hindi"]:
+        lang = "English"
+
     greetings = ["hi", "hello", "hey", "namaste", "नमस्ते"]
     if any(g in user_msg for g in greetings):
-        return {"response": "Hello! I'm Nehu 😊 Ask me any family recipe or pooja ritual."}
+        greet_msg = {
+            "English": "Hello! I'm Nehu 😊 Ask me any family recipe or pooja ritual.",
+            "Hindi": "नमस्ते! मैं नेहू हूँ 😊 मुझसे कोई भी पारिवारिक रेसिपी या पूजा विधि पूछें।"
+        }
+        return {"response": greet_msg[lang], "detected_language": lang}
 
-    # 2. Check aliases first (full word match)
     for alias_key, mapped_key in aliases.items():
         if re.search(r'\b' + re.escape(alias_key) + r'\b', user_msg):
             recipe = find_recipe_by_keyword(mapped_key)
             if recipe:
                 return format_recipe_response(recipe, mapped_key, lang)
-
-            # Also check relation and conversation responses if any
             rel_resp = find_relation_response(mapped_key)
             if rel_resp:
-                return {"response": rel_resp.get(lang, rel_resp.get("English"))}
+                return {"response": rel_resp.get(lang)}
             conv_resp = find_conversation_response(mapped_key)
             if conv_resp:
-                return {"response": conv_resp.get(lang, conv_resp.get("English"))}
+                return {"response": conv_resp.get(lang)}
 
-    # 3. Check relation keywords
     for rel_key in relation_keywords:
         if re.search(r'\b' + re.escape(rel_key) + r'\b', user_msg):
             res = find_relation_response(rel_key)
             if res:
-                return {"response": res.get(lang, res.get("English"))}
+                return {"response": res.get(lang)}
 
-    # 4. Check conversation keywords
     for conv_key in conversation_keywords:
         if re.search(r'\b' + re.escape(conv_key) + r'\b', user_msg):
             res = find_conversation_response(conv_key)
             if res:
-                return {"response": res.get(lang, res.get("English"))}
+                return {"response": res.get(lang)}
 
-    # 5. Regex pattern matching for recipes
     for key, pattern in recipe_keywords:
         if pattern.search(user_msg):
             recipe = find_recipe_by_keyword(key)
             return format_recipe_response(recipe, key, lang)
 
-    # 6. Fuzzy matching fallback (with cutoff 0.6)
     close_matches = difflib.get_close_matches(user_msg.replace(" ", "_"), recipe_key_strings, n=1, cutoff=0.6)
     if close_matches:
         key = close_matches[0]
         recipe = find_recipe_by_keyword(key)
         return format_recipe_response(recipe, key, lang)
 
-    # 7. Fallback response when nothing matches
-    fallback = {
+    fallback_msg = {
         "English": "Sorry, I couldn't find anything related. Can you try asking differently?",
         "Hindi": "माफ़ कीजिए, मुझे इस बारे में जानकारी नहीं मिली। कृपया कुछ और पूछें।"
     }
-
-    # Detect if user message looks like a greeting or relation or conversation keyword for fallback context
-    if any(g in user_msg for g in greetings):
-        return {"response": fallback[lang]}
-    for key in relation_keywords + conversation_keywords:
-        if re.search(r'\b' + re.escape(key) + r'\b', user_msg):
-            return {"response": fallback[lang]}
-
-    # If the message might be about food/recipe or pooja, mention that
-    possible_recipe_or_pooja = any(
-        kw in user_msg for kw in ["recipe", "pooja", "food", "dish", "cooking", "cook", "how to make", "kaise banaye"]
-    )
-    if possible_recipe_or_pooja:
-        return {"response": fallback[lang]}
-
-    # General fallback for unknown messages
-    return {"response": "Nehu didn't quite get that. Could you please rephrase or ask about a family recipe or ritual?"}
+    return {"response": fallback_msg[lang]}
 
 def format_recipe_response(recipe, key, lang):
     if not recipe:
-        # Distinguish fallback response for missing recipe specifically
-        return {"response": f"Sorry, I couldn't find the recipe for '{key.replace('_', ' ')}'. Please try asking something else."}
+        return {"response": f"Sorry, I couldn't find the recipe for '{key.replace('_', ' ')}'."}
 
     title = recipe.get('title', {}).get(lang, recipe.get('title', {}).get('English', 'Recipe'))
     ingredients = recipe.get('ingredients', {}).get(lang, [])
