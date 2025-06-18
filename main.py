@@ -59,11 +59,37 @@ aliases = {
     "puri": "urad_dal_poori",
     "urad": "urad_dal_poori",
 
-    "haak": "haak_recipe",
-    "haak recipe": "haak_recipe",
-    "hak": "haak_recipe",
-    "kashmiri haak": "haak_recipe",
-    "kashmiri hak": "haak_recipe",
+    "haak": "haak",
+    "haak recipe": "haak",
+    "hak": "haak",
+    "kashmiri haak": "haak",
+    "kashmiri hak": "haak",
+
+    "fried rice": "fried_rice",
+    "friend rice": "fried_rice",
+    "food": "food_general",
+    "food recipe": "food_general",
+    "recipes": "food_general"
+}
+
+# General topic triggers
+general_keywords = {
+    "food": {
+        "English": "Are you looking for something delicious? You can ask me about any family recipe like 'dum aloo', 'urad dal poori', or 'pumpkin curry'.",
+        "Hindi": "क्या आप कुछ स्वादिष्ट ढूंढ रहे हैं? आप मुझसे 'दम आलू', 'उड़द दाल पूड़ी' या 'कद्दू की सब्ज़ी' जैसी पारिवारिक रेसिपी पूछ सकते हैं।"
+    },
+    "khana": {
+        "English": "Let me know what kind of food you're craving. I know many homely Indian recipes!",
+        "Hindi": "आप किस तरह का खाना ढूंढ रहे हैं बताएं। मुझे कई घरेलू भारतीय रेसिपीज़ आती हैं!"
+    },
+    "pooja": {
+        "English": "I can guide you on pooja rituals like Karwa Chauth or Gowardhan Pooja.",
+        "Hindi": "मैं करवा चौथ या गोवर्धन पूजा जैसी पूजा विधियों में आपकी मदद कर सकती हूँ।"
+    },
+    "culture": {
+        "English": "Our culture is full of beautiful rituals and flavors. Want a recipe or a pooja detail?",
+        "Hindi": "हमारी संस्कृति में अनेक स्वादिष्ट रेसिपी और पूजा विधियाँ हैं। आप किस बारे में जानना चाहेंगे?"
+    }
 }
 
 recipe_keywords = []
@@ -106,7 +132,6 @@ async def chatbot_response(chat_request: ChatRequest):
             lang_code = "en"
         lang = "Hindi" if lang_code == "hi" else "English"
 
-    # Only support English and Hindi
     if lang not in ["English", "Hindi"]:
         lang = "English"
 
@@ -123,9 +148,11 @@ async def chatbot_response(chat_request: ChatRequest):
             recipe = find_recipe_by_keyword(mapped_key)
             if recipe:
                 return format_recipe_response(recipe, mapped_key, lang)
+
             rel_resp = find_relation_response(mapped_key)
             if rel_resp:
                 return {"response": rel_resp.get(lang)}
+
             conv_resp = find_conversation_response(mapped_key)
             if conv_resp:
                 return {"response": conv_resp.get(lang)}
@@ -141,6 +168,10 @@ async def chatbot_response(chat_request: ChatRequest):
             res = find_conversation_response(conv_key)
             if res:
                 return {"response": res.get(lang)}
+
+    for keyword, message in general_keywords.items():
+        if re.search(r'\b' + re.escape(keyword) + r'\b', user_msg):
+            return {"response": message[lang], "detected_language": lang}
 
     for key, pattern in recipe_keywords:
         if pattern.search(user_msg):

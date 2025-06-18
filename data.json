@@ -1,171 +1,486 @@
 {
-  "recipes": {
-    "pooja_rituals": {
-      "karwa_chauth": {
-        "title": {"English": "Karwa Chauth Pooja", "Hindi": "करवा चौथ पूजा"},
-        "details": {
-          "English": [
-            "1. Eat and drink before sunrise (preferably by 5:15am).",
-            "2. Dress in traditional clothes and apply mehendi.",
-            "3. In the evening, perform pooja with diya and thali.",
-            "4. Listen to the Karwa Chauth story.",
-            "5. See the moon through sieve and offer water.",
-            "6. Break fast after husband's blessings."
-          ],
-          "Hindi": [
-            "1. सूर्योदय से पहले खाएं और पिएं (सुबह 5:15 बजे तक)।",
-            "2. पारंपरिक कपड़े पहनें और मेहंदी लगाएं।",
-            "3. शाम को दीया और थाली के साथ पूजा करें।",
-            "4. करवा चौथ की कथा सुनें।",
-            "5. छलनी से चाँद देखें और पानी अर्पित करें।",
-            "6. पति के आशीर्वाद के बाद व्रत खोलें।"
-          ]
-        }
+   "recipes":{
+      "pooja_rituals":{
+         "karwa_chauth":{
+            "title":{
+               "English":"Karwa Chauth Pooja",
+               "Hindi":"करवा चौथ पूजा"
+            },
+            "details":{
+               "English":[
+                  "1. Eat and drink before sunrise (preferably by 5:15am).",
+                  "2. Dress in traditional clothes and apply mehendi.",
+                  "3. In the evening, perform pooja with diya and thali.",
+                  "4. Listen to the Karwa Chauth story.",
+                  "5. See the moon through sieve and offer water.",
+                  "6. Break fast after husband's blessings."
+               ],
+               "Hindi":[
+                  "1. सूर्योदय से पहले खाएं और पिएं (सुबह 5:15 बजे तक)।",
+                  "2. पारंपरिक कपड़े पहनें और मेहंदी लगाएं।",
+                  "3. शाम को दीया और थाली के साथ पूजा करें।",
+                  "4. करवा चौथ की कथा सुनें।",
+                  "5. छलनी से चाँद देखें और पानी अर्पित करें।",
+                  "6. पति के आशीर्वाद के बाद व्रत खोलें।"
+               ]
+            }
+         },
+         "gowardhan_pooja":{
+            "title":{
+               "English":"Gowardhan Pooja",
+               "Hindi":"गोवर्धन पूजा"
+            },
+            "details":{
+               "English":[
+                  "Prepare potato and brinjal curry.",
+                  "Make parathas in a deep pan (kadhai)."
+               ],
+               "Hindi":[
+                  "आलू और बैंगन की सब्जी बनाएं।",
+                  "कढ़ाई में पराठे बनाएं।"
+               ]
+            }
+         },
+         "navratri_vrat":{
+            "title":{
+               "English":"Navratri Vrat Rules",
+               "Hindi":"नवरात्रि व्रत नियम"
+            },
+            "details":{
+               "English":[
+                  "Avoid onion, garlic, and grains like wheat and rice.",
+                  "Eat satvik food like sabudana, fruits, and kuttu atta.",
+                  "Pray to Goddess Durga for 9 days and perform aarti daily."
+               ],
+               "Hindi":[
+                  "नवरात्रि में प्याज, लहसुन और अनाज जैसे गेहूं-चावल नहीं खाते।",
+                  "साबूदाना, फल, कुट्टू आटा आदि सात्विक चीज़ें खाएं।",
+                  "9 दिनों तक माँ दुर्गा की पूजा करें और रोज आरती करें।"
+               ]
+            }
+         }
       },
-      "gowardhan_pooja": {
-        "title": {"English": "Gowardhan Pooja", "Hindi": "गोवर्धन पूजा"},
-        "details": {
-          "English": [
-            "Prepare potato and brinjal curry.",
-            "Make parathas in a deep pan (kadhai)."
-          ],
-          "Hindi": [
-            "आलू और बैंगन की सब्जी बनाएं।",
-            "कढ़ाई में पराठे बनाएं।"
-          ]
-        }
+      "satvik_recipes":{
+         "pumpkin_recipe":{
+            "title":{
+               "English":"Pumpkin (Kaddu) Recipe",
+               "Hindi":"कद्दू की रेसिपी"
+            },
+            "method":{
+               "English":[
+                  "Peel the pumpkin; if hard, cook with 2 whistles.",
+                  "Temper with methi seeds and hing.",
+                  "Add coriander, amchoor, salt, red chili, turmeric, and a little sugar.",
+                  "Roast well till water evaporates."
+               ],
+               "Hindi":[
+                  "कद्दू का छिलका उतारें; अगर सख्त हो तो 2 सीटी में पका लें।",
+                  "मेथी दाने और हींग से तड़का लगाएं।",
+                  "धनिया, अमचूर, नमक, लाल मिर्च, हल्दी और थोड़ा सा शक्कर डालें।",
+                  "अच्छे से भूनें जब तक पानी सूख न जाए।"
+               ]
+            }
+         },
+         "bittergourd_recipe":{
+            "title":{
+               "English":"Bittergourd (Karela) Recipe",
+               "Hindi":"करेले की रेसिपी"
+            },
+            "method":{
+               "English":[
+                  "Peel the karela (bittergourd).",
+                  "Rub salt on it with a sieve; remove seeds if large.",
+                  "Keep salted for 2–3 hours.",
+                  "Wash thoroughly, squeeze water, and pressure cook for 2–3 whistles.",
+                  "Drain in a strainer to remove excess water.",
+                  "Heat oil, add hing, and roast karela.",
+                  "Press and cook on low flame to reduce bitterness.",
+                  "When 75% cooked, add spices: fennel, turmeric, salt, red chili, coriander, amchoor.",
+                  "Mix and cook thoroughly."
+               ],
+               "Hindi":[
+                  "करेले का छिलका उतारो।",
+                  "नमक लगाओ और अगर बीज बड़े हों तो निकाल दो।",
+                  "2-3 घंटे तक नमक लगाकर रखो।",
+                  "अच्छे से धोकर निचोड़ लो और 2-3 सीटी लगाओ।",
+                  "स्टेनर में निकालकर सारा पानी निकाल दो।",
+                  "तेल में हींग डालकर करेले को भूनो।",
+                  "अच्छी तरह दबा-दबा कर धीमी आंच पर पकाओ।",
+                  "75% भुनने के बाद मसाले डालो: सौंफ, हल्दी, नमक, लाल मिर्च, धनिया, अमचूर।",
+                  "अच्छे से चलाओ और पकाओ।"
+               ]
+            }
+         },
+         "urad_dal_poori":{
+            "title":{
+               "English":"Urad Dal Poori Recipe",
+               "Hindi":"उड़द दाल की पूड़ी"
+            },
+            "ingredients":{
+               "English":[
+                  "1 cup urad dal",
+                  "Salt to taste",
+                  "½ tsp asafoetida (hing)",
+                  "1 tsp fennel seeds",
+                  "½ tsp garam masala",
+                  "1 tbsp semolina (sooji)",
+                  "Wheat flour as needed",
+                  "A little oil"
+               ],
+               "Hindi":[
+                  "1 कप उड़द की दाल",
+                  "नमक – स्वाद अनुसार",
+                  "हींग – ½ चम्मच",
+                  "सौंफ – 1 चम्मच",
+                  "गरम मसाला – ½ चम्मच",
+                  "सूजी (रवा) – 1 चम्मच",
+                  "गेहूं का आटा – आवश्यकतानुसार",
+                  "थोड़ा सा तेल"
+               ]
+            },
+            "method":{
+               "English":[
+                  "Soak urad dal for 3–4 hours.",
+                  "Drain and grind to a fine paste without adding water.",
+                  "Mix the paste with flour, spices, and knead into a dough.",
+                  "Let it rest. Make small balls, roll and deep fry like pooris."
+               ],
+               "Hindi":[
+                  "उड़द की दाल को 3-4 घंटे के लिए पानी में भिगो दें।",
+                  "दाल को निकालें और बिना पानी डाले बारीक पीस लें।",
+                  "पिसी हुई दाल को आटे में मसालों के साथ मिलाएं और गूंद लें।",
+                  "थोड़ा विश्राम दें। फिर लोइयां बनाकर पूड़ी की तरह बेलें और तलें।"
+               ]
+            },
+            "tip":{
+               "English":"Crispy outside, soft inside. Serve with curd, pickle, or aloo sabzi.",
+               "Hindi":"यह पूड़ी बाहर से करारी और अंदर से नरम होती है। इसे दही, अचार या आलू की सब्जी के साथ परोसे।"
+            }
+         },
+         "aloo_jeera":{
+            "title":{
+               "English":"Aloo Jeera",
+               "Hindi":"आलू जीरा"
+            },
+            "method":{
+               "English":[
+                  "Boil and cube potatoes.",
+                  "Heat ghee, add cumin seeds, green chili, and asafoetida.",
+                  "Add boiled potatoes, salt, turmeric, and toss well."
+               ],
+               "Hindi":[
+                  "आलू उबालें और टुकड़े करें।",
+                  "घी गरम करें, जीरा, हरी मिर्च और हींग डालें।",
+                  "उबले आलू, नमक और हल्दी डालकर अच्छे से मिलाएं।"
+               ]
+            }
+         },
+         "lauki_sabzi":{
+            "title":{
+               "English":"Lauki (Bottle Gourd) Sabzi",
+               "Hindi":"लौकी की सब्जी"
+            },
+            "method":{
+               "English":[
+                  "Peel and cut lauki.",
+                  "Cook with cumin, turmeric, salt, and tomatoes.",
+                  "Pressure cook for 2 whistles."
+               ],
+               "Hindi":[
+                  "लौकी छीलकर काटें।",
+                  "जीरा, हल्दी, नमक और टमाटर के साथ पकाएं।",
+                  "2 सीटी में प्रेशर कुक करें।"
+               ]
+            }
+         },
+         "nimbu_rice":{
+            "title":{
+               "English":"Lemon Rice",
+               "Hindi":"नींबू चावल"
+            },
+            "method":{
+               "English":[
+                  "Cook rice and let it cool.",
+                  "Temper with mustard seeds, curry leaves, dry red chili, peanuts.",
+                  "Add turmeric and lemon juice. Mix well."
+               ],
+               "Hindi":[
+                  "चावल पकाएं और ठंडा करें।",
+                  "सरसों, करी पत्ते, सूखी मिर्च, मूंगफली से तड़का लगाएं।",
+                  "हल्दी और नींबू का रस डालें और मिलाएं।"
+               ]
+            }
+         }
+      },
+      "kashmiri_dishes":{
+         "haak":{
+            "title":{
+               "English":"Haak (Kashmiri Collard Greens)",
+               "Hindi":"हाक (कश्मीरी साग)"
+            },
+            "ingredients":{
+               "English":[
+                  "Haak leaves (collard greens)",
+                  "Mustard oil",
+                  "Dry red chili",
+                  "Asafoetida (hing)",
+                  "Salt"
+               ],
+               "Hindi":[
+                  "हाक के पत्ते",
+                  "सरसों का तेल",
+                  "सूखी लाल मिर्च",
+                  "हींग",
+                  "नमक"
+               ]
+            },
+            "method":{
+               "English":[
+                  "Wash haak leaves thoroughly.",
+                  "Boil water and add salt and hing.",
+                  "Add haak leaves and cook until tender.",
+                  "Temper mustard oil with dry red chili and add to the cooked haak.",
+                  "Serve hot."
+               ],
+               "Hindi":[
+                  "हाक के पत्ते अच्छे से धो लें।",
+                  "पानी उबालें, नमक और हींग डालें।",
+                  "हाक डालकर नरम होने तक पकाएं।",
+                  "सरसों का तेल गर्म करें, सूखी लाल मिर्च डालें और पकाए हुए हाक में डालें।",
+                  "गरम परोसें।"
+               ]
+            }
+         },
+         "chokh_wangun":{
+            "title":{
+               "English":"Chokh Wangun",
+               "Hindi":"चोख वांगुन"
+            },
+            "ingredients":{
+               "English":[
+                  "Brinjal",
+                  "Tamarind",
+                  "Kashmiri chili",
+                  "Fennel",
+                  "Mustard oil"
+               ],
+               "Hindi":[
+                  "बैंगन",
+                  "इमली",
+                  "कश्मीरी मिर्च",
+                  "सौंफ",
+                  "सरसों का तेल"
+               ]
+            },
+            "method":{
+               "English":[
+                  "Slice and shallow fry brinjals.",
+                  "Prepare a tangy sauce with tamarind and spices.",
+                  "Simmer brinjals in the sauce."
+               ],
+               "Hindi":[
+                  "बैंगन को काटकर हल्का तलें।",
+                  "इमली और मसालों से तीखी ग्रेवी बनाएं।",
+                  "बैंगन को ग्रेवी में उबालें।"
+               ]
+            }
+         },
+         "nadru_yakhni":{
+            "title":{
+               "English":"Nadru Yakhni",
+               "Hindi":"नद्रू यखनी"
+            },
+            "ingredients":{
+               "English":[
+                  "Lotus stem (nadru)",
+                  "Yogurt",
+                  "Fennel",
+                  "Dry ginger",
+                  "Ghee"
+               ],
+               "Hindi":[
+                  "कमल ककड़ी (नद्रू)",
+                  "दही",
+                  "सौंफ",
+                  "सौंठ",
+                  "घी"
+               ]
+            },
+            "method":{
+               "English":[
+                  "Boil nadru until tender.",
+                  "Whisk yogurt with spices.",
+                  "Cook nadru in the yogurt-spice gravy with ghee."
+               ],
+               "Hindi":[
+                  "नद्रू को नरम होने तक उबालें।",
+                  "दही को मसालों के साथ फेंटें।",
+                  "नद्रू को दही की ग्रेवी में घी के साथ पकाएं।"
+               ]
+            }
+         }
+      },
+      "general_recipes":{
+         "palak_paneer":{
+            "title":{
+               "English":"Palak Paneer",
+               "Hindi":"पालक पनीर"
+            },
+            "ingredients":{
+               "English":[
+                  "Spinach",
+                  "Paneer",
+                  "Garlic",
+                  "Green chili",
+                  "Cream"
+               ],
+               "Hindi":[
+                  "पालक",
+                  "पनीर",
+                  "लहसुन",
+                  "हरी मिर्च",
+                  "क्रीम"
+               ]
+            },
+            "method":{
+               "English":[
+                  "Boil and puree spinach.",
+                  "Cook with garlic, green chili, and spices.",
+                  "Add paneer cubes and simmer. Finish with cream."
+               ],
+               "Hindi":[
+                  "पालक उबालें और पेस्ट बनाएं।",
+                  "लहसुन, हरी मिर्च और मसालों के साथ पकाएं।",
+                  "पनीर डालें और थोड़ी देर पकाएं। अंत में क्रीम डालें।"
+               ]
+            }
+         },
+         "fried_rice":{
+            "title":{
+               "English":"Fried Rice",
+               "Hindi":"फ्राइड राइस"
+            },
+            "ingredients":{
+               "English":[
+                  "2 cups cooked rice (preferably cold)",
+                  "1 cup mixed vegetables (carrot, beans, capsicum, peas)",
+                  "2 tbsp oil",
+                  "1 tsp chopped garlic",
+                  "1 tsp chopped ginger",
+                  "2 tbsp soy sauce",
+                  "1 tbsp vinegar",
+                  "Salt to taste",
+                  "Black pepper to taste",
+                  "Spring onions (optional)"
+               ],
+               "Hindi":[
+                  "2 कप पका हुआ चावल (ठंडा होना बेहतर)",
+                  "1 कप मिक्स सब्जियां (गाजर, बीन्स, शिमला मिर्च, मटर)",
+                  "2 टेबलस्पून तेल",
+                  "1 छोटा चम्मच कटा हुआ लहसुन",
+                  "1 छोटा चम्मच कटा हुआ अदरक",
+                  "2 टेबलस्पून सोया सॉस",
+                  "1 टेबलस्पून विनेगर",
+                  "स्वादानुसार नमक",
+                  "स्वादानुसार काली मिर्च",
+                  "स्प्रिंग अनियन (वैकल्पिक)"
+               ]
+            },
+            "method":{
+               "English":[
+                  "Heat oil in a wok or pan.",
+                  "Add chopped garlic and ginger, sauté till fragrant.",
+                  "Add mixed vegetables and cook on high flame for 2–3 minutes.",
+                  "Add cooked rice and toss gently.",
+                  "Pour soy sauce, vinegar, salt, and pepper.",
+                  "Mix well and cook for another 2 minutes.",
+                  "Garnish with spring onions and serve hot."
+               ],
+               "Hindi":[
+                  "कड़ाही या पैन में तेल गर्म करें।",
+                  "कटा हुआ लहसुन और अदरक डालें और महक आने तक भूनें।",
+                  "मिक्स सब्जियां डालें और तेज आंच पर 2–3 मिनट पकाएं।",
+                  "पका हुआ चावल डालें और हल्के हाथ से मिलाएं।",
+                  "सोया सॉस, विनेगर, नमक और काली मिर्च डालें।",
+                  "अच्छे से मिलाएं और 2 मिनट और पकाएं।",
+                  "स्प्रिंग अनियन से सजाकर गरमा गरम परोसें।"
+               ]
+            },
+            "tip":{
+               "English":"Use leftover cold rice to prevent it from turning mushy.",
+               "Hindi":"चावल चिपचिपे न हों, इसके लिए बचे हुए ठंडे चावल का उपयोग करें।"
+            }
+         },
+         "avocado_toast":{
+            "title":{
+               "English":"Avocado Toast",
+               "Hindi":"एवोकाडो टोस्ट"
+            },
+            "ingredients":{
+               "English":[
+                  "Bread",
+                  "Avocado",
+                  "Lemon juice",
+                  "Salt",
+                  "Chili flakes"
+               ],
+               "Hindi":[
+                  "ब्रेड",
+                  "एवोकाडो",
+                  "नींबू रस",
+                  "नमक",
+                  "चिली फ्लेक्स"
+               ]
+            },
+            "method":{
+               "English":[
+                  "Toast the bread.",
+                  "Mash avocado with lemon juice and salt.",
+                  "Spread over toast and sprinkle chili flakes."
+               ],
+               "Hindi":[
+                  "ब्रेड को टोस्ट करें।",
+                  "एवोकाडो को नींबू रस और नमक के साथ मैश करें।",
+                  "टोस्ट पर लगाएं और चिली फ्लेक्स डालें।"
+               ]
+            }
+         },
+         "masala_chai":{
+            "title":{
+               "English":"Masala Chai",
+               "Hindi":"मसाला चाय"
+            },
+            "ingredients":{
+               "English":[
+                  "Water",
+                  "Milk",
+                  "Tea leaves",
+                  "Cardamom",
+                  "Ginger",
+                  "Clove"
+               ],
+               "Hindi":[
+                  "पानी",
+                  "दूध",
+                  "चाय पत्ती",
+                  "इलायची",
+                  "अदरक",
+                  "लौंग"
+               ]
+            },
+            "method":{
+               "English":[
+                  "Boil water with spices.",
+                  "Add tea leaves and boil.",
+                  "Add milk and boil again. Strain and serve hot."
+               ],
+               "Hindi":[
+                  "मसालों के साथ पानी उबालें।",
+                  "चाय पत्ती डालें और उबालें।",
+                  "दूध डालें और फिर से उबालें। छानकर गरम परोसें।"
+               ]
+            }
+         }
       }
-    },
-    "satvik_recipes": {
-      "pumpkin_recipe": {
-        "title": {"English": "Pumpkin (Kaddu) Recipe", "Hindi": "कद्दू की रेसिपी"},
-        "method": {
-          "English": [
-            "Peel the pumpkin; if hard, cook with 2 whistles.",
-            "Temper with methi seeds and hing.",
-            "Add coriander, amchoor, salt, red chili, turmeric, and a little sugar.",
-            "Roast well till water evaporates."
-          ],
-          "Hindi": [
-            "कद्दू का छिलका उतारें; अगर सख्त हो तो 2 सीटी में पका लें।",
-            "मेथी दाने और हींग से तड़का लगाएं।",
-            "धनिया, अमचूर, नमक, लाल मिर्च, हल्दी और थोड़ा सा शक्कर डालें।",
-            "अच्छे से भूनें जब तक पानी सूख न जाए।"
-          ]
-        }
-      },
-      "bittergourd_recipe": {
-        "title": {"English": "Bittergourd (Karela) Recipe", "Hindi": "करेले की रेसिपी"},
-        "method": {
-          "English": [
-            "Peel the karela (bittergourd).",
-            "Rub salt on it with a sieve; remove seeds if large.",
-            "Keep salted for 2–3 hours.",
-            "Wash thoroughly, squeeze water, and pressure cook for 2–3 whistles.",
-            "Drain in a strainer to remove excess water.",
-            "Heat oil, add hing, and roast karela.",
-            "Press and cook on low flame to reduce bitterness.",
-            "When 75% cooked, add spices: fennel, turmeric, salt, red chili, coriander, amchoor.",
-            "Mix and cook thoroughly."
-          ],
-          "Hindi": [
-            "करेले का छिलका उतारो।",
-            "नमक लगाओ और अगर बीज बड़े हों तो निकाल दो।",
-            "2-3 घंटे तक नमक लगाकर रखो।",
-            "अच्छे से धोकर निचोड़ लो और 2-3 सीटी लगाओ।",
-            "स्टेनर में निकालकर सारा पानी निकाल दो।",
-            "तेल में हींग डालकर करेले को भूनो।",
-            "अच्छी तरह दबा-दबा कर धीमी आंच पर पकाओ।",
-            "75% भुनने के बाद मसाले डालो: सौंफ, हल्दी, नमक, लाल मिर्च, धनिया, अमचूर।",
-            "अच्छे से चलाओ और पकाओ।"
-          ]
-        }
-      }
-    },
-    "kashmiri_dishes": {
-      "kashmiri_dum_aloo": {
-        "title": {"English": "Kashmiri Dum Aloo", "Hindi": "कश्मीरी दम आलू"},
-        "ingredients": {
-          "English": ["Baby potatoes", "Curd", "Kashmiri chili", "Spices"],
-          "Hindi": ["छोटे आलू", "दही", "कश्मीरी मिर्च", "मसाले"]
-        },
-        "method": {
-          "English": ["Boil potatoes", "Fry lightly", "Cook in curd-based gravy"],
-          "Hindi": ["आलू उबालें", "थोड़ा तलें", "दही की ग्रेवी में पकाएं"]
-        }
-      },
-      "urad_dal_poori": {
-        "title": {"English": "Urad Dal Poori Recipe", "Hindi": "उड़द दाल की पूड़ी"},
-        "ingredients": {
-          "English": [
-            "1 cup urad dal", "Salt to taste", "½ tsp asafoetida (hing)",
-            "1 tsp fennel seeds", "½ tsp garam masala", "1 tbsp semolina (sooji)",
-            "Wheat flour as needed", "A little oil"
-          ],
-          "Hindi": [
-            "1 कप उड़द की दाल", "नमक – स्वाद अनुसार", "हींग – ½ चम्मच",
-            "सौंफ – 1 चम्मच", "गरम मसाला – ½ चम्मच", "सूजी (रवा) – 1 चम्मच",
-            "गेहूं का आटा – आवश्यकतानुसार", "थोड़ा सा तेल"
-          ]
-        },
-        "method": {
-          "English": [
-            "Soak urad dal for 3–4 hours.",
-            "Drain and grind to a fine paste without adding water.",
-            "Mix the paste with flour, spices, and knead into a dough.",
-            "Let it rest. Make small balls, roll and deep fry like pooris."
-          ],
-          "Hindi": [
-            "उड़द की दाल को 3-4 घंटे के लिए पानी में भिगो दें।",
-            "दाल को निकालें और बिना पानी डाले बारीक पीस लें।",
-            "पिसी हुई दाल को आटे में मसालों के साथ मिलाएं और गूंद लें।",
-            "थोड़ा विश्राम दें। फिर लोइयां बनाकर पूड़ी की तरह बेलें और तलें।"
-          ]
-        },
-        "tip": {
-          "English": "Crispy outside, soft inside. Serve with curd, pickle, or aloo sabzi.",
-          "Hindi": "यह पूड़ी बाहर से करारी और अंदर से नरम होती है। इसे दही, अचार या आलू की सब्जी के साथ परोसे।"
-        }
-      },
-      "haak": {
-        "title": {
-          "English": "Haak (Kashmiri Collard Greens)",
-          "Hindi": "हाक (कश्मीरी साग)"
-        },
-        "ingredients": {
-          "English": [
-            "Haak leaves (collard greens)",
-            "Mustard oil",
-            "Dry red chili",
-            "Asafoetida (hing)",
-            "Salt"
-          ],
-          "Hindi": [
-            "हाक के पत्ते",
-            "सरसों का तेल",
-            "सूखी लाल मिर्च",
-            "हींग",
-            "नमक"
-          ]
-        },
-        "method": {
-          "English": [
-            "Wash haak leaves thoroughly.",
-            "Boil water and add salt and hing.",
-            "Add haak leaves and cook until tender.",
-            "Temper mustard oil with dry red chili and add to the cooked haak.",
-            "Serve hot."
-          ],
-          "Hindi": [
-            "हाक के पत्ते अच्छे से धो लें।",
-            "पानी उबालें, नमक और हींग डालें।",
-            "हाक डालकर नरम होने तक पकाएं।",
-            "सरसों का तेल गर्म करें, सूखी लाल मिर्च डालें और पकाए हुए हाक में डालें।",
-            "गरम परोसें।"
-          ]
-        }
-      }
-    },
-    "general_recipes": {}
-  }
+   }
 }
