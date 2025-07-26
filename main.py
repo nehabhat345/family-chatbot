@@ -30,6 +30,13 @@ aliases = {
     "karwachauth": "karwa_chauth",
     "karva chauth": "karwa_chauth",
     "karwachauth pooja": "karwa_chauth",
+    
+    "teej": "teej_pooja",
+    "teej pooja": "teej_pooja",
+    "hariyali teej": "teej_pooja",
+    "teej vrat": "teej_pooja",
+    "teej ritual": "teej_pooja",
+
 
     "gowardhan pooja": "gowardhan_pooja",
     "govardhan pooja": "gowardhan_pooja",
