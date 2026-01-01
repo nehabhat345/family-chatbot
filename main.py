@@ -30,6 +30,14 @@ aliases = {
     "karwachauth": "karwa_chauth",
     "karva chauth": "karwa_chauth",
     "karwachauth pooja": "karwa_chauth",
+
+    "sakat chauth": "sakat_chauth",
+    "sakat chauth pooja": "sakat_chauth",
+    "sankat chauth": "sakat_chauth",
+    "sankat chauth pooja": "sakat_chauth",
+    "til chauth": "sakat_chauth",
+    "til chauth pooja": "sakat_chauth",
+    "ganesh chauth": "sakat_chauth",
     
     "teej": "teej_pooja",
     "teej pooja": "teej_pooja",
@@ -187,8 +195,8 @@ async def chatbot_response(chat_request: ChatRequest):
                         "Hindi": "मैं पारिवारिक रेसिपी जैसे सात्विक, कश्मीरी, और सामान्य व्यंजन बता सकती हूँ। आप क्या जानना चाहेंगे?"
                     },
                     "pooja": {
-                        "English": "I can guide you through various pooja rituals like Karwa Chauth and Govardhan Pooja. What would you like to know?",
-                        "Hindi": "मैं आपको करवा चौथ और गोवर्धन पूजा जैसी पूजा विधियों के बारे में बता सकती हूँ। आप क्या जानना चाहेंगे?"
+                        "English": "I can guide you through pooja rituals like Karwa Chauth, Sakat Chauth, Teej, and Govardhan Pooja. What would you like to know?",
+                        "Hindi": "मैं आपको करवा चौथ, सकट चौथ, तीज और गोवर्धन पूजा जैसी पूजा विधियों के बारे में बता सकती हूँ। आप क्या जानना चाहेंगे?"
                     },
                     "culture": {
                         "English": "Our family's culture and traditions are rich! Feel free to ask about rituals, festivals, or recipes.",
