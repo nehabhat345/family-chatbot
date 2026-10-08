@@ -612,6 +612,84 @@
             "दूध डालें और फिर से उबालें। छानकर गरम परोसें।"
           ]
         }
+      },
+      "chicken_biryani": {
+        "title": {
+          "English": "Chicken Biryani Recipe",
+          "Hindi": "चिकन बिरयानी रेसिपी"
+        },
+        "ingredients": {
+          "English": [
+            "**For the fried onions**",
+            "5–6 medium onions, very thinly sliced",
+            "2 tbsp buffalo ghee",
+            "1 cup oil",
+            "**For marinating the chicken**",
+            "1 kg chicken",
+            "1 cup curd, beaten",
+            "Finely chopped mint and coriander",
+            "3 green chillies, chopped",
+            "Red chilli powder, salt to taste, and dhania/coriander powder",
+            "A little homemade garam masala powder",
+            "5 tsp ginger-garlic paste",
+            "Some fried onions",
+            "**For the rice**",
+            "1 kg basmati rice",
+            "Saffron",
+            "Lavanglu — 2 tsp",
+            "Elaichi (cardamom)",
+            "4 biryani leaves",
+            "Salt",
+            "Some leftover oil/ghee from frying the onions"
+          ],
+          "Hindi": [
+            "**तले हुए प्याज़ के लिए**",
+            "5–6 मध्यम आकार के प्याज़, बहुत पतले कटे हुए",
+            "2 बड़े चम्मच भैंस का घी",
+            "1 कप तेल",
+            "**चिकन को मेरिनेट करने के लिए**",
+            "1 किलो चिकन",
+            "1 कप फेंटा हुआ दही",
+            "बारीक कटा हुआ पुदीना और धनिया",
+            "3 कटी हुई हरी मिर्च",
+            "लाल मिर्च पाउडर, स्वादानुसार नमक और धनिया पाउडर",
+            "थोड़ा सा घर का बना गरम मसाला पाउडर",
+            "5 छोटे चम्मच अदरक-लहसुन का पेस्ट",
+            "थोड़े से तले हुए प्याज़",
+            "**चावल के लिए**",
+            "1 किलो बासमती चावल",
+            "केसर",
+            "लवंग (लौंग) — 2 छोटे चम्मच",
+            "इलायची",
+            "4 बिरयानी पत्ते (तेज पत्ता)",
+            "नमक",
+            "प्याज़ तलने के बाद बचा हुआ थोड़ा तेल/घी"
+          ]
+        },
+        "method": {
+          "English": [
+            "**Fry the onions:** Heat 2 tbsp buffalo ghee and 1 cup oil in a kadai. Add the thinly sliced onions and fry until golden and crispy. Remove and set aside; keep the remaining oil/ghee for later.",
+            "**Marinate the chicken:** Wash the chicken well. Add 1 cup beaten curd, finely chopped mint and coriander, 3 chopped green chillies, red chilli powder, salt, dhania powder, a little garam masala, 5 tsp ginger-garlic paste, and some fried onions. Mix well and marinate for 1 hour.",
+            "**Prepare the rice:** Soak the basmati rice for ½ hour, then cook until half-boiled and drain completely. Add saffron, 2 tsp lavanglu, elaichi, 4 biryani leaves, salt, and some of the leftover onion-frying oil/ghee. Mix gently so the rice does not get smashed.",
+            "**Cook the chicken:** Put the marinated chicken in a kadai and cook over medium flame until approximately ¾ cooked. Keep sufficient gravy with the chicken.",
+            "**Layer the biryani:** Remove the chicken from the stove. In a steel bowl, alternate layers of rice and chicken with some gravy. Continue until everything is used, finish with rice on top, and add the remaining fried onions.",
+            "**Pressure-cook:** Place the steel bowl in a large pressure cooker. Add 2–3 glasses of water around the bowl, close the cooker, and cook for 8–10 whistles. The process can be repeated twice, using two steel bowls if needed.",
+            "Let the biryani rest for a few minutes before gently mixing the layers. Serve hot."
+          ],
+          "Hindi": [
+            "**प्याज़ तलें:** कड़ाही में 2 बड़े चम्मच भैंस का घी और 1 कप तेल गरम करें। पतले कटे प्याज़ डालकर सुनहरे और कुरकुरे होने तक तलें। प्याज़ निकालकर अलग रखें और बचा हुआ तेल/घी बाद के लिए रख लें।",
+            "**चिकन को मेरिनेट करें:** चिकन को अच्छी तरह धो लें। उसमें 1 कप फेंटा हुआ दही, बारीक कटा पुदीना और धनिया, 3 कटी हरी मिर्च, लाल मिर्च पाउडर, नमक, धनिया पाउडर, थोड़ा गरम मसाला, 5 छोटे चम्मच अदरक-लहसुन का पेस्ट और थोड़े तले प्याज़ डालें। अच्छी तरह मिलाकर 1 घंटे के लिए मेरिनेट होने दें।",
+            "**चावल तैयार करें:** बासमती चावल को ½ घंटे भिगोएँ। फिर आधा पकने तक उबालें और पानी पूरी तरह निकाल दें। केसर, 2 छोटे चम्मच लवंग, इलायची, 4 बिरयानी पत्ते, नमक और प्याज़ तलने के बाद बचा थोड़ा तेल/घी डालें। चावल को टूटने से बचाते हुए धीरे से मिलाएँ।",
+            "**चिकन पकाएँ:** मेरिनेट किया हुआ चिकन कड़ाही में डालकर मध्यम आँच पर लगभग ¾ पकने तक पकाएँ। चिकन के साथ पर्याप्त ग्रेवी रहने दें।",
+            "**बिरयानी की परतें बनाएँ:** चिकन को चूल्हे से उतार लें। स्टील के बर्तन में चावल और ग्रेवी वाले चिकन की बारी-बारी से परतें लगाएँ। सारी सामग्री खत्म होने तक परतें लगाएँ। ऊपर चावल की परत रखें और बचे हुए तले प्याज़ डालें।",
+            "**प्रेशर कुकर में पकाएँ:** स्टील के बर्तन को बड़े प्रेशर कुकर में रखें। बर्तन के चारों ओर कुकर में 2–3 गिलास पानी डालें, कुकर बंद करें और 8–10 सीटी आने तक पकाएँ। ज़रूरत हो तो यह प्रक्रिया दो बार दोहरा सकते हैं; इसके लिए दो स्टील के बर्तन इस्तेमाल करें।",
+            "बिरयानी को कुछ मिनट आराम करने दें। परतों को धीरे से मिलाएँ और गरमागरम परोसें।"
+          ]
+        },
+        "tip": {
+          "English": "For the pressure-cooker method, keep the steel bowl above the water rather than putting the biryani directly in the cooker.",
+          "Hindi": "प्रेशर कुकर में स्टील का बर्तन पानी से ऊपर रखें; बिरयानी को सीधे कुकर में न डालें।"
+        }
       }
     }
   }

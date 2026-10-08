@@ -83,6 +83,17 @@ aliases = {
     "fried rice": "fried_rice",
     "friend rice": "fried_rice",
 
+    "chicken biryani recipe": "chicken_biryani",
+    "chicken biryani": "chicken_biryani",
+    "chicken biriyani": "chicken_biryani",
+    "chicken iryani": "chicken_biryani",
+    "biryani recipe": "chicken_biryani",
+    "biriyani": "chicken_biryani",
+    "briyani": "chicken_biryani",
+    "biryani": "chicken_biryani",
+    "dum biryani": "chicken_biryani",
+    "murg biryani": "chicken_biryani",
+    "chicken": "chicken_biryani",
     "food": "food_general",
     "food recipe": "food_general",
     "recipes": "food_general"
